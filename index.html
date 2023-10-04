@@ -40,22 +40,25 @@
     </table>
 
     <script>
-        // Dados de exemplo
-        var dados = [
-            { nome: 'João', email: 'joao@example.com', idade: 25 },
-            { nome: 'Maria', email: 'maria@example.com', idade: 30 },
-            { nome: 'Carlos', email: 'carlos@example.com', idade: 22 }
-        ];
+        // Função para fazer uma requisição à API e preencher a tabela
+        function carregarDadosDaAPI() {
+            fetch('https://api.example.com/usuarios')
+                .then(response => response.json())
+                .then(data => {
+                    popularTabela(data); // Chama a função para preencher a tabela
+                })
+                .catch(error => console.error('Erro:', error));
+        }
 
-        // Função para preencher a tabela
-        function popularTabela() {
+        // Função para preencher a tabela com os dados da API
+        function popularTabela(dados) {
             var tabela = document.getElementById('relatorioTable');
             var tbody = tabela.getElementsByTagName('tbody')[0];
 
             // Limpar a tabela antes de popular
             tbody.innerHTML = '';
 
-            // Preencher a tabela com os dados
+            // Preencher a tabela com os dados da API
             dados.forEach(function (item) {
                 var row = tbody.insertRow();
                 var cell1 = row.insertCell(0);
@@ -68,8 +71,8 @@
             });
         }
 
-        // Chamar a função para preencher a tabela
-        popularTabela();
+        // Chamar a função para carregar dados da API
+        carregarDadosDaAPI();
     </script>
 
 </body>
