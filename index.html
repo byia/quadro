@@ -4,16 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exibir Dados</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        #dados {
+            margin-top: 20px;
+            white-space: pre-line;
+        }
+    </style>
 </head>
 <body>
 
-    <h2>Dados do Arquivo CSV</h2>
+    <div id="container">
+        <h2>Dados do Arquivo CSV</h2>
 
-    <div id="dados"></div>
+        <div id="dados"></div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            fetch('https://raw.githubusercontent.com/Lucashs98/quadro/master/logins.csv')
+            fetch('https://raw.githubusercontent.com/seu-usuario/seu-repositorio/master/logins.csv')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('dados').innerText = data;
