@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> QUADRO </title>
+    <title>Página 2</title>
 </head>
 <body>
-    <h2>Bem-vindo, + encodeURIComponent(username) </h2>
+    <div id="welcomeMessage"></div>
 
     <form id="infoForm">
         <!-- Campos para informações -->
@@ -46,6 +46,8 @@
         <button type="button" onclick="saveInfo()">Salvar</button>
     </form>
 
+    <div id="saveMessage"></div>
+
     <script src="https://apis.google.com/js/api.js"></script>
     <script>
         function getParameterByName(name, url) {
@@ -56,6 +58,12 @@
             if (!results) return null;
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        // Função para exibir o nome do usuário na mensagem de boas-vindas
+        function showWelcomeMessage() {
+            var username = getParameterByName('user');
+            document.getElementById('welcomeMessage').innerText = 'Bem-vindo, ' + username + '!';
         }
 
         function saveInfo() {
@@ -80,15 +88,39 @@
                 discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
             }).then(function() {
                 gapi.client.sheets.spreadsheets.values.append({
-                    spreadsheetId: 'https://docs.google.com/spreadsheets/d/1FHKL6rlmr90wWUeur58IvKUhiDn_xRiDhmx4SSSS1Po/edit#gid=0',
+                    spreadsheetId: 'SUA_PLANILHA_ID',
                     range: 'QUADRO',
                     valueInputOption: 'USER_ENTERED',
                     values: [[username, formattedDate, vd, faturados, reprovados, consorcio, dd, renave, receitas, veiculos_usados, veiculos_novos, aviso_venda, trade_in]]
                 }).then(function(response) {
                     console.log('Informações salvas com sucesso:', response);
+
+                    // Limpar campos após o salvamento
+                    document.getElementById('vd').value = '';
+                    document.getElementById('faturados').value = '';
+                    document.getElementById('reprovados').value = '';
+                    document.getElementById('consorcio').value = '';
+                    document.getElementById('dd').value = '';
+                    document.getElementById('renave').value = '';
+                    document.getElementById('receitas').value = '';
+                    document.getElementById('veiculos_usados').value = '';
+                    document.getElementById('veiculos_novos').value = '';
+                    document.getElementById('aviso_venda').value = '';
+                    document.getElementById('trade_in').value = '';
+
+                    // Exibir mensagem de "SALVO"
+                    document.getElementById('saveMessage').innerText = 'Salvo!';
+                    
+                    // Ocultar a mensagem após alguns segundos (opcional)
+                    setTimeout(function() {
+                        document.getElementById('saveMessage').innerText = '';
+                    }, 3000);
                 });
             });
         }
+
+        // Chame a função para exibir a mensagem de boas-vindas ao carregar a página
+        showWelcomeMessage();
     </script>
 </body>
 </html>
