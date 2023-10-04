@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+</head>
+<body>
+
+    <h2>Login Form</h2>
+
+    <form id="loginForm">
+        <label for="username">Usuário:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="button" onclick="salvarInformacoes()">Salvar</button>
+    </form>
+
+    <script>
+        function salvarInformacoes() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            // Cria um objeto CSV com as colunas USER e PASS
+            var csvContent = "USER,PASS\n" + username + "," + password + "\n";
+
+            // Cria um objeto Blob para salvar o conteúdo como arquivo
+            var blob = new Blob([csvContent], { type: 'text/csv' });
+
+            // Cria um link para download do arquivo
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'logins.csv';
+
+            // Adiciona o link ao corpo do documento e simula o clique
+            document.body.appendChild(link);
+            link.click();
+
+            // Remove o link do corpo do documento
+            document.body.removeChild(link);
+        }
+    </script>
+
+</body>
+</html>
