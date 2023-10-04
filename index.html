@@ -1,0 +1,63 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+</head>
+<body>
+
+  <h2>Login</h2>
+  <form id="loginForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <button type="button" onclick="login()">Login</button>
+  </form>
+
+  <script>
+    function login() {
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      // Fetch CSV data
+      fetch('logins.csv')
+        .then(response => response.text())
+        .then(data => {
+          var logins = parseCSV(data);
+          var user = logins.find(u => u.username === username && u.password === password);
+
+          if (user) {
+            // Successful login, redirect to inicio.html
+            window.location.href = "inicio.html?name=" + user.name;
+          } else {
+            alert("Invalid username or password. Please try again.");
+          }
+        })
+        .catch(error => console.error('Error fetching CSV:', error));
+    }
+
+    function parseCSV(data) {
+      // Assuming CSV format is username,password,name
+      var rows = data.split('\n');
+      var logins = [];
+
+      for (var i = 1; i < rows.length; i++) {
+        var cols = rows[i].split(',');
+        logins.push({
+          username: cols[0],
+          password: cols[1],
+          name: cols[2]
+        });
+      }
+
+      return logins;
+    }
+  </script>
+
+</body>
+</html>
