@@ -3,55 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exibir Dados</title>
+    <title>Relatório Tabela</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        #container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
+        table {
+            border-collapse: collapse;
             width: 100%;
-        }
-
-        h2 {
-            color: #333;
-        }
-
-        #dados {
             margin-top: 20px;
-            white-space: pre-line;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
 
-    <div id="container">
-        <h2>Dados do Arquivo CSV</h2>
+    <h2>Relatório Tabela</h2>
 
-        <div id="dados"></div>
-    </div>
+    <table id="relatorioTable">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Idade</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Dados serão inseridos aqui dinamicamente -->
+        </tbody>
+    </table>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('https://raw.githubusercontent.com/Lucashs98/quadro/master/logins.csv')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('dados').innerText = data;
-                })
-                .catch(error => console.error('Erro:', error));
-        });
+        // Dados de exemplo
+        var dados = [
+            { nome: 'João', email: 'joao@example.com', idade: 25 },
+            { nome: 'Maria', email: 'maria@example.com', idade: 30 },
+            { nome: 'Carlos', email: 'carlos@example.com', idade: 22 }
+        ];
+
+        // Função para preencher a tabela
+        function popularTabela() {
+            var tabela = document.getElementById('relatorioTable');
+            var tbody = tabela.getElementsByTagName('tbody')[0];
+
+            // Limpar a tabela antes de popular
+            tbody.innerHTML = '';
+
+            // Preencher a tabela com os dados
+            dados.forEach(function (item) {
+                var row = tbody.insertRow();
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+
+                cell1.innerHTML = item.nome;
+                cell2.innerHTML = item.email;
+                cell3.innerHTML = item.idade;
+            });
+        }
+
+        // Chamar a função para preencher a tabela
+        popularTabela();
     </script>
 
 </body>
