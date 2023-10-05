@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Formulário</title>
+    <title>Página 2</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -26,7 +26,7 @@
         }
 
         input {
-            width: 100%;
+            width: calc(100% - 16px); /* Ajuste para compensar o padding de 8px nas laterais */
             padding: 8px;
             margin-bottom: 16px;
             box-sizing: border-box;
@@ -57,6 +57,11 @@
             margin-top: 16px;
             display: none;
         }
+
+        #welcomeMessage {
+            margin-bottom: 20px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -71,7 +76,32 @@
         <label for="faturados">Faturados:</label>
         <input type="text" id="faturados" required>
 
-        <!-- ... (Outros campos permanecem os mesmos) ... -->
+        <label for="reprovados">Reprovados:</label>
+        <input type="text" id="reprovados" required>
+
+        <label for="consorcio">Consórcio:</label>
+        <input type="text" id="consorcio" required>
+
+        <label for="dd">DD:</label>
+        <input type="text" id="dd" required>
+
+        <label for="renave">Renave:</label>
+        <input type="text" id="renave" required>
+
+        <label for="receitas">Receitas:</label>
+        <input type="text" id="receitas" required>
+
+        <label for="veiculos_usados">Veículos Usados:</label>
+        <input type="text" id="veiculos_usados" required>
+
+        <label for="veiculos_novos">Veículos Novos:</label>
+        <input type="text" id="veiculos_novos" required>
+
+        <label for="aviso_venda">Aviso de Venda:</label>
+        <input type="text" id="aviso_venda" required>
+
+        <label for="trade_in">Trade-in:</label>
+        <input type="text" id="trade_in" required>
 
         <button type="button" onclick="saveInfo()">Salvar</button>
     </form>
@@ -92,6 +122,11 @@
             if (!results) return null;
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        function showWelcomeMessage() {
+            var username = getParameterByName('user');
+            document.getElementById('welcomeMessage').innerText = 'Bem-vindo, ' + username + '!';
         }
 
         function saveInfo() {
