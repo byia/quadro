@@ -1,24 +1,143 @@
-// Gerar e baixar arquivo CSV
-                    downloadCSV(username, formattedDate, vd, faturados, reprovados, consorcio, dd, renave, receitas, veiculos_usados, veiculos_novos, aviso_venda, trade_in);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página 2</title>
+</head>
+<body>
+    <div id="welcomeMessage"></div>
+
+    <form id="infoForm">
+        <!-- Campos para informações -->
+        <label for="vd">VD:</label>
+        <input type="text" id="vd" required>
+
+        <label for="faturados">Faturados:</label>
+        <input type="text" id="faturados" required>
+
+        <label for="reprovados">Reprovados:</label>
+        <input type="text" id="reprovados" required>
+
+        <label for="consorcio">Consórcio:</label>
+        <input type="text" id="consorcio" required>
+
+        <label for="dd">DD:</label>
+        <input type="text" id="dd" required>
+
+        <label for="renave">Renave:</label>
+        <input type="text" id="renave" required>
+
+        <label for="receitas">Receitas:</label>
+        <input type="text" id="receitas" required>
+
+        <label for="veiculos_usados">Veículos Usados:</label>
+        <input type="text" id="veiculos_usados" required>
+
+        <label for="veiculos_novos">Veículos Novos:</label>
+        <input type="text" id="veiculos_novos" required>
+
+        <label for="aviso_venda">Aviso de Venda:</label>
+        <input type="text" id="aviso_venda" required>
+
+        <label for="trade_in">Trade-in:</label>
+        <input type="text" id="trade_in" required>
+
+        <button type="button" onclick="saveInfo()">Salvar</button>
+    </form>
+
+    <div id="saveMessage"></div>
+    <div id="downloadButton" style="display: none;">
+        <button type="button" onclick="downloadCSV()">Baixar CSV</button>
+    </div>
+
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+        var csvContent = "Nome,Data,VD,Faturados,Reprovados,Consórcio,DD,Renave,Receitas,Veículos Usados,Veículos Novos,Aviso de Venda,Trade-in\n"; // Inicializa o conteúdo do CSV
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        // Função para exibir o nome do usuário na mensagem de boas-vindas
+        function showWelcomeMessage() {
+            var username = getParameterByName('user');
+            document.getElementById('welcomeMessage').innerText = 'Bem-vindo, ' + username + '!';
+        }
+
+        function saveInfo() {
+            var username = getParameterByName('user');
+            var vd = document.getElementById('vd').value;
+            var faturados = document.getElementById('faturados').value;
+            var reprovados = document.getElementById('reprovados').value;
+            var consorcio = document.getElementById('consorcio').value;
+            var dd = document.getElementById('dd').value;
+            var renave = document.getElementById('renave').value;
+            var receitas = document.getElementById('receitas').value;
+            var veiculos_usados = document.getElementById('veiculos_usados').value;
+            var veiculos_novos = document.getElementById('veiculos_novos').value;
+            var aviso_venda = document.getElementById('aviso_venda').value;
+            var trade_in = document.getElementById('trade_in').value;
+
+            var currentDate = new Date();
+            var formattedDate = currentDate.toLocaleDateString('pt-BR');
+
+            gapi.client.init({
+                apiKey: 'AIzaSyBjwEb_wC3k2BQ8jQ7ZL8qcpvHp94Ya2uQ',
+                discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+            }).then(function() {
+                gapi.client.sheets.spreadsheets.values.append({
+                    spreadsheetId: 'SUA_PLANILHA_ID',
+                    range: 'QUADRO',
+                    valueInputOption: 'USER_ENTERED',
+                    values: [[username, formattedDate, vd, faturados, reprovados, consorcio, dd, renave, receitas, veiculos_usados, veiculos_novos, aviso_venda, trade_in]]
+                }).then(function(response) {
+                    console.log('Informações salvas com sucesso:', response);
+
+                    // Limpar campos após o salvamento
+                    document.getElementById('vd').value = '';
+                    document.getElementById('faturados').value = '';
+                    document.getElementById('reprovados').value = '';
+                    document.getElementById('consorcio').value = '';
+                    document.getElementById('dd').value = '';
+                    document.getElementById('renave').value = '';
+                    document.getElementById('receitas').value = '';
+                    document.getElementById('veiculos_usados').value = '';
+                    document.getElementById('veiculos_novos').value = '';
+                    document.getElementById('aviso_venda').value = '';
+                    document.getElementById('trade_in').value = '';
+
+                    // Exibir mensagem de "SALVO"
+                    document.getElementById('saveMessage').innerText = 'Salvo!';
+                    
+                    // Ocultar a mensagem após alguns segundos (opcional)
+                    setTimeout(function() {
+                        document.getElementById('saveMessage').innerText = '';
+                    }, 3000);
+
+                    // Atualizar o conteúdo do CSV
+                    csvContent += `${username},${formattedDate},${vd},${faturados},${reprovados},${consorcio},${dd},${renave},${receitas},${veiculos_usados},${veiculos_novos},${aviso_venda},${trade_in}\n`;
+                    
+                    // Exibir o botão de download
+                    document.getElementById('downloadButton').style.display = 'block';
                 });
             });
         }
 
-        function downloadCSV(username, date, vd, faturados, reprovados, consorcio, dd, renave, receitas, veiculos_usados, veiculos_novos, aviso_venda, trade_in) {
-            var csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Nome,Data,VD,Faturados\n";
-            csvContent += username + "," + date + "," + vd + "," + faturados + "\n";
-
-            // Obtenha outros campos aqui e adicione ao csvContent
-
-            var encodedUri = encodeURI(csvContent);
+        function downloadCSV() {
+            var encodedUri = encodeURI("data:text/csv;charset=utf-8," + csvContent);
             var link = document.createElement("a");
             link.setAttribute("href", encodedUri);
             link.setAttribute("download", "dados_usuario.csv");
-
             document.body.appendChild(link);
+
             link.click();
-            document.body.removeChild(link);
         }
 
         // Chame a função para exibir a mensagem de boas-vindas ao carregar a página
