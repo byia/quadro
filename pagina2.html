@@ -68,35 +68,7 @@
         <label for="vd">VD:</label>
         <input type="text" id="vd" required>
 
-        <label for="faturados">Faturados:</label>
-        <input type="text" id="faturados" required>
-
-        <label for="reprovados">Reprovados:</label>
-        <input type="text" id="reprovados" required>
-
-        <label for="consorcio">Consórcio:</label>
-        <input type="text" id="consorcio" required>
-
-        <label for="dd">DD:</label>
-        <input type="text" id="dd" required>
-
-        <label for="renave">Renave:</label>
-        <input type="text" id="renave" required>
-
-        <label for="receitas">Receitas:</label>
-        <input type="text" id="receitas" required>
-
-        <label for="veiculos_usados">Veículos Usados:</label>
-        <input type="text" id="veiculos_usados" required>
-
-        <label for="veiculos_novos">Veículos Novos:</label>
-        <input type="text" id="veiculos_novos" required>
-
-        <label for="aviso_venda">Aviso de Venda:</label>
-        <input type="text" id="aviso_venda" required>
-
-        <label for="trade_in">Trade-in:</label>
-        <input type="text" id="trade_in" required>
+        <!-- ... (Outros campos permanecem os mesmos) ... -->
 
         <button type="button" onclick="saveInfo()">Salvar</button>
     </form>
@@ -129,32 +101,14 @@
             // Lógica para salvar as informações, exibir mensagem e limpar campos
             var username = getParameterByName('user');
             var vd = document.getElementById('vd').value;
-            var faturados = document.getElementById('faturados').value;
-            var reprovados = document.getElementById('reprovados').value;
-            var consorcio = document.getElementById('consorcio').value;
-            var dd = document.getElementById('dd').value;
-            var renave = document.getElementById('renave').value;
-            var receitas = document.getElementById('receitas').value;
-            var veiculos_usados = document.getElementById('veiculos_usados').value;
-            var veiculos_novos = document.getElementById('veiculos_novos').value;
-            var aviso_venda = document.getElementById('aviso_venda').value;
-            var trade_in = document.getElementById('trade_in').value;
+
+            // ... (Outras variáveis permanecem as mesmas) ...
 
             // Exibir mensagem de "SALVO"
             document.getElementById('saveMessage').innerText = 'Salvo!';
             
             // Limpar campos após o salvamento
             document.getElementById('vd').value = '';
-            document.getElementById('faturados').value = '';
-            document.getElementById('reprovados').value = '';
-            document.getElementById('consorcio').value = '';
-            document.getElementById('dd').value = '';
-            document.getElementById('renave').value = '';
-            document.getElementById('receitas').value = '';
-            document.getElementById('veiculos_usados').value = '';
-            document.getElementById('veiculos_novos').value = '';
-            document.getElementById('aviso_venda').value = '';
-            document.getElementById('trade_in').value = '';
 
             // Ocultar a mensagem após alguns segundos (opcional)
             setTimeout(function() {
@@ -162,7 +116,7 @@
             }, 3000);
 
             // Atualizar o conteúdo do CSV
-            csvContent += `${username},${new Date().toLocaleDateString('pt-BR')},${vd},${faturados},${reprovados},${consorcio},${dd},${renave},${receitas},${veiculos_usados},${veiculos_novos},${aviso_venda},${trade_in}\n`;
+            csvContent += `${username},${new Date().toLocaleDateString('pt-BR')},${vd},... (Outras variáveis),\n`;
             
             // Exibir o botão de download
             document.getElementById('downloadButton').style.display = 'block';
@@ -181,13 +135,6 @@
 
             link.click();
         }
-
-    </script>
-
-</body>
-</html>
-
-Neste ajuste, adicionei a lógica para compor o nome do arquivo CSV com o nome do usuário e a data. O nome do arquivo será algo como "NomeUsuario_31-12-2022_dados.csv". Isso deve garantir nomes únicos e informativos para os arquivos baixados.
 
         // Chame a função para exibir a mensagem de boas-vindas ao carregar a página
         showWelcomeMessage();
