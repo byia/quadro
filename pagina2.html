@@ -4,6 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Formulário</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        #infoForm {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #saveMessage {
+            margin-top: 16px;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        #downloadButton {
+            margin-top: 16px;
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -115,14 +169,25 @@
         }
 
         function downloadCSV() {
+            var username = getParameterByName('user');
+            var currentDate = new Date().toLocaleDateString('pt-BR').replace(/\//g, '-'); // Substituir barras por hífens para evitar problemas com o nome do arquivo
+
+            var fileName = `${username}_${currentDate}_dados.csv`;
             var encodedUri = encodeURI("data:text/csv;charset=utf-8," + csvContent);
             var link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "dados_usuario.csv");
+            link.setAttribute("download", fileName);
             document.body.appendChild(link);
 
             link.click();
         }
+
+    </script>
+
+</body>
+</html>
+
+Neste ajuste, adicionei a lógica para compor o nome do arquivo CSV com o nome do usuário e a data. O nome do arquivo será algo como "NomeUsuario_31-12-2022_dados.csv". Isso deve garantir nomes únicos e informativos para os arquivos baixados.
 
         // Chame a função para exibir a mensagem de boas-vindas ao carregar a página
         showWelcomeMessage();
