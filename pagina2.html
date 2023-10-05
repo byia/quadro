@@ -18,12 +18,6 @@
     <button onclick="salvarCSV()">Salvar</button>
 
     <script>
-
-// Função para exibir o nome do usuário na mensagem de boas-vindas
-        function showWelcomeMessage() {
-            var username = getParameterByName('user');
-            document.getElementById('welcomeMessage').innerText = 'Bem-vindo, ' + username + '!';
-
         function salvarCSV() {
             // Obter os valores do formulário
             var nome = document.getElementById('nome').value;
@@ -32,22 +26,25 @@
             // Criar um objeto CSV
             var csv = 'Nome,Idade\n' + nome + ',' + idade;
 
-            // Criar um Blob (objeto binário) com os dados CSV
-            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+            // Confirmar se o usuário deseja baixar o arquivo
+            if (confirm("Deseja baixar as informações em um arquivo CSV?")) {
+                // Criar um Blob (objeto binário) com os dados CSV
+                var blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
 
-            // Criar um link para download
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = 'informacoes.csv';
+                // Criar um link para download
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'informacoes.csv';
 
-            // Adicionar o link ao documento
-            document.body.appendChild(link);
+                // Adicionar o link ao documento
+                document.body.appendChild(link);
 
-            // Simular um clique no link para iniciar o download
-            link.click();
+                // Simular um clique no link para iniciar o download
+                link.click();
 
-            // Remover o link do documento
-            document.body.removeChild(link);
+                // Remover o link do documento
+                document.body.removeChild(link);
+            }
         }
     </script>
 
