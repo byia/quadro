@@ -115,8 +115,25 @@
                     setTimeout(function() {
                         document.getElementById('saveMessage').innerText = '';
                     }, 3000);
+
+                    // Gerar e baixar arquivo CSV
+                    downloadCSV(username, formattedDate, vd, faturados, reprovados, consorcio, dd, renave, receitas, veiculos_usados, veiculos_novos, aviso_venda, trade_in);
                 });
             });
+        }
+
+        function downloadCSV(username, date, vd, faturados, reprovados, consorcio, dd, renave, receitas, veiculos_usados, veiculos_novos, aviso_venda, trade_in) {
+            var csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Nome,Data,VD,Faturados,Reprovados,Consórcio,DD,Renave,Receitas,Veículos Usados,Veículos Novos,Aviso de Venda,Trade-in\n";
+            csvContent += username + "," + date + "," + vd + "," + faturados + "," + reprovados + "," + consorcio + "," + dd + "," + renave + "," + receitas + "," + veiculos_usados + "," + veiculos_novos + "," + aviso_venda + "," + trade_in + "\n";
+
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "dados_usuario.csv");
+            document.body.appendChild(link);
+
+            link.click();
         }
 
         // Chame a função para exibir a mensagem de boas-vindas ao carregar a página
