@@ -61,10 +61,10 @@
 </head>
 <body>
     <form id="loginForm">
-        <label for="username">NOME:</label>
+        <label for="username">Nome de Usuário:</label>
         <input type="text" id="username" required>
 
-        <label for="password">SENHA:</label>
+        <label for="password">Senha:</label>
         <input type="password" id="password" required>
 
         <button type="button" onclick="checkLogin()">Entrar</button>
@@ -76,6 +76,15 @@
             var username = document.getElementById('username').value;
             var password = document.getElementById('password').value;
             var errorMessageElement = document.getElementById('errorMessage');
+
+            // Lista de nomes permitidos
+            var nomesPermitidos = ['Ana Paula', 'Celia', 'Danillo', 'Jhenipher', 'Jhennyfer', 'Kelly', 'Laisa', 'Lucas', 'Matheus', 'Wigner'];
+
+            // Verificar se o nome está na lista permitida
+            if (nomesPermitidos.indexOf(username) === -1) {
+                errorMessageElement.textContent = 'Nome de usuário não permitido.';
+                return;
+            }
 
             if (!username || !password) {
                 errorMessageElement.textContent = 'Por favor, preencha todos os campos.';
