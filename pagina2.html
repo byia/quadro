@@ -138,7 +138,7 @@
             var currentDate = new Date().toLocaleDateString('pt-BR').replace(/\//g, '-');
 
             var fileName = `${username}_${currentDate}_dados.csv`;
-            var encodedUri = encodeURI("data:text/csv;charset=utf-8," + csvContent);
+            var encodedUri = encodeURI("data:text/csv;charset=utf-8," + encodeURIComponent(csvContent));
             var link = document.createElement("a");
             link.setAttribute("href", encodedUri);
             link.setAttribute("download", fileName);
@@ -147,7 +147,6 @@
             link.click();
         }
 
-        // Chame a função para exibir a mensagem de boas-vindas ao carregar a página
         showWelcomeMessage();
     </script>
 
