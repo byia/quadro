@@ -61,10 +61,10 @@
 </head>
 <body>
     <form id="loginForm">
-        <label for="username">Nome de Usuário:</label>
+        <label for="username">NOME:</label>
         <input type="text" id="username" required>
 
-        <label for="password">Senha:</label>
+        <label for="password">SENHA:</label>
         <input type="password" id="password" required>
 
         <button type="button" onclick="checkLogin()">Entrar</button>
@@ -73,12 +73,12 @@
 
     <script>
         function checkLogin() {
-            var username = document.getElementById('username').value;
+            var username = document.getElementById('username').value.toLowerCase(); // Converter para minúsculas
             var password = document.getElementById('password').value;
             var errorMessageElement = document.getElementById('errorMessage');
 
-            // Lista de nomes permitidos
-            var nomesPermitidos = ['Ana Paula', 'Celia', 'Danillo', 'Jhenipher', 'Jhennyfer', 'Kelly', 'Laisa', 'Lucas', 'Matheus', 'Wigner'];
+            // Lista de nomes permitidos (em minúsculas)
+            var nomesPermitidos = ['ana paula', 'celia', 'danillo', 'jhenipher', 'jhennyfer', 'kelly', 'laisa', 'lucas', 'matheus', 'wigner'];
 
             // Verificar se o nome está na lista permitida
             if (nomesPermitidos.indexOf(username) === -1) {
