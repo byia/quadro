@@ -26,7 +26,7 @@
         }
 
         input {
-            width: calc(100% - 16px); /* Ajuste para compensar o padding de 8px nas laterais */
+            width: calc(100% - 16px);
             padding: 8px;
             margin-bottom: 16px;
             box-sizing: border-box;
@@ -35,7 +35,7 @@
         }
 
         button {
-            background-color: #4caf50;
+            background-color: #3498db;
             color: #fff;
             padding: 10px 15px;
             border: none;
@@ -44,17 +44,12 @@
         }
 
         button:hover {
-            background-color: #45a049;
-        }
-
-        #saveMessage {
-            margin-top: 16px;
-            color: #4caf50;
-            font-weight: bold;
+            background-color: #2980b9;
         }
 
         #downloadButton {
             margin-top: 16px;
+            text-align: center;
         }
 
         #downloadButton button {
@@ -114,12 +109,9 @@
 
         <label for="trade_in">Trade-in:</label>
         <input type="text" id="trade_in" required>
-
-        <button type="button" onclick="saveInfo()">Salvar</button>
     </form>
 
-    <div id="saveMessage"></div>
-    <div id="downloadButton" style="display: none;">
+    <div id="downloadButton">
         <button type="button" onclick="downloadCSV()">Baixar CSV</button>
     </div>
 
@@ -141,33 +133,35 @@
             document.getElementById('welcomeMessage').innerText = 'Bem-vindo, ' + username + '!';
         }
 
-        function saveInfo() {
-            // ... (Lógica de salvar informações permanece a mesma) ...
-        }
-
         function downloadCSV() {
-    var username = getParameterByName('user');
-    var currentDate = new Date().toLocaleDateString('pt-BR').replace(/\//g, '-');
+            // Coleta os dados do formulário
+            var username = getParameterByName('user');
+            var currentDate = new Date().toLocaleDateString('pt-BR').replace(/\//g, '-');
+            var vd = document.getElementById('vd').value;
+            var faturados = document.getElementById('faturados').value;
+            var reprovados = document.getElementById('reprovados').value;
+            var consorcio = document.getElementById('consorcio').value;
+            var dd = document.getElementById('dd').value;
+            var renave = document.getElementById('renave').value;
+            var receitas = document.getElementById('receitas').value;
+            var veiculos_usados = document.getElementById('veiculos_usados').value;
+            var veiculos_novos = document.getElementById('veiculos_novos').value;
+            var aviso_venda = document.getElementById('aviso_venda').value;
+            var trade_in = document.getElementById('trade_in').value;
 
-    var fileName = `${username}_${currentDate}_dados.csv`;
-    var encodedUri = encodeURI("data:text/csv;charset=utf-8," + encodeURIComponent(csvContent));
+            // Adiciona uma linha ao csvContent com os dados do formulário
+            csvContent += `${username},${currentDate},"${vd}","${faturados}","${reprovados}","${consorcio}","${dd}","${renave}","${receitas}","${veiculos_usados}","${veiculos_novos}","${aviso_venda}","${trade_in}"\n`;
 
-    var link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", fileName);
+            // Codifica a URI corretamente
+            var fileName = `${username}_${currentDate}_dados.csv`;
+            var encodedUri = "data:text/csv;charset=utf-8," + encodeURIComponent(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", fileName);
+            document.body.appendChild(link);
 
-    // Remova o link anterior, se existir
-    var existingLink = document.getElementById('downloadLink');
-    if (existingLink) {
-        existingLink.parentNode.removeChild(existingLink);
-    }
-
-    link.setAttribute("id", "downloadLink"); // Adiciona um id ao link
-
-    document.getElementById('downloadButton').appendChild(link);
-
-    link.click();
-}
+            link.click();
+        }
 
         showWelcomeMessage();
     </script>
