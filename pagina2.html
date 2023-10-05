@@ -55,7 +55,19 @@
 
         #downloadButton {
             margin-top: 16px;
-            display: none;
+        }
+
+        #downloadButton button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #downloadButton button:hover {
+            background-color: #2980b9;
         }
 
         #welcomeMessage {
@@ -142,7 +154,7 @@
             var link = document.createElement("a");
             link.setAttribute("href", encodedUri);
             link.setAttribute("download", fileName);
-            document.body.appendChild(link);
+            document.getElementById('downloadButton').appendChild(link);
 
             link.click();
         }
