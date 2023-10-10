@@ -127,7 +127,7 @@
             </div>
         </div>
         <a href="javascript:void(0);" onclick="openPopup('login.html')" class="button">QUADRO ONLINE</a>
-        <a href="javascript:void(0);" onclick="checkPasswordAndRedirect()" class="button">LANÇAMENTOS</a>
+        <a href="javascript:void(0);" onclick="checkPasswordAndRedirect()" class="button">RELATORIO</a>
     </div>
 
     <script>
@@ -136,7 +136,7 @@
         }
 
         function checkPasswordAndRedirect() {
-            const enteredPassword = prompt('Digite a senha para acessar os LANÇAMENTOS:');
+            const enteredPassword = prompt('Digite a senha para acessar o Relatorio:');
             const correctPassword = 'Analise123';
 
             if (enteredPassword === correctPassword) {
