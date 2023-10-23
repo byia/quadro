@@ -90,11 +90,13 @@
             background-color: #e74c3c;
             border-radius: 10px;
             text-align: center;
+            display: none; /* Oculta por padrão */
         }
 
         .aviso-img {
             max-width: 100%;
             height: auto;
+            max-height: 200px; /* Altura máxima da imagem */
         }
     </style>
 </head>
@@ -138,15 +140,10 @@
                     <a href="https://solucoes.receita.fazenda.gov.br/servicos/cnpjreva/cnpjreva_solicitacao.asp"
                         class="button" target="_blank">Consulta CNPJ</a>
                 </div>
-            </div>
             <div class="aviso-container">
             <img src="aviso.jpg" alt="Aviso" class="aviso-img">
         </div>
 
-        <a href="javascript:void(0);" onclick="openPopup('login.html')" class="button">QUADRO ONLINE</a>
-        <a href="javascript:void(0);" onclick="checkPasswordAndRedirect()" class="button">RELATORIO</a>
-    </div>
-        </div>
         <a href="javascript:void(0);" onclick="openPopup('login.html')" class="button">QUADRO ONLINE</a>
         <a href="javascript:void(0);" onclick="checkPasswordAndRedirect()" class="button">RELATORIO</a>
     </div>
