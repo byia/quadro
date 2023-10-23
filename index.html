@@ -82,6 +82,20 @@
         .button:hover {
             background-color: #2980b9;
         }
+
+        /* Estilos para a tela de avisos */
+        .aviso-container {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e74c3c;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .aviso-img {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 
@@ -124,7 +138,13 @@
                     <a href="https://solucoes.receita.fazenda.gov.br/servicos/cnpjreva/cnpjreva_solicitacao.asp"
                         class="button" target="_blank">Consulta CNPJ</a>
                 </div>
-            </div>
+            <div class="aviso-container">
+            <img src="aviso.jpg" alt="Aviso" class="aviso-img">
+        </div>
+
+        <a href="javascript:void(0);" onclick="openPopup('login.html')" class="button">QUADRO ONLINE</a>
+        <a href="javascript:void(0);" onclick="checkPasswordAndRedirect()" class="button">RELATORIO</a>
+    </div>
         </div>
         <a href="javascript:void(0);" onclick="openPopup('login.html')" class="button">QUADRO ONLINE</a>
         <a href="javascript:void(0);" onclick="checkPasswordAndRedirect()" class="button">RELATORIO</a>
