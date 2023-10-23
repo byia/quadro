@@ -13,21 +13,21 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            flex-direction: column; /* Ajuste para organizar elementos verticalmente */
+            align-items: center; /* Centralizar na horizontal */
             min-height: 100vh;
         }
 
         .container {
             text-align: center;
-            padding: 70px;
+            padding: 20px; /* Reduzi o padding para economizar espaço */
             border-radius: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             background-color: #ffffff;
             width: 75%;
             max-width: 1200px;
-            margin: auto;
             margin-top: 20px;
+            flex-grow: 1; /* Faz com que o container cresça para preencher o restante da altura */
         }
 
         h1 {
@@ -85,18 +85,17 @@
 
         /* Estilos para a tela de avisos */
         .aviso-container {
-            margin-top: 30px;
+            margin-top: 20px;
             padding: 20px;
             background-color: #e74c3c;
             border-radius: 10px;
             text-align: center;
-            display: none; /* Oculta por padrão */
+            width: 100%; /* Garante que a caixa do aviso ocupa 100% da largura */
         }
 
         .aviso-img {
             max-width: 100%;
             height: auto;
-            max-height: 200px; /* Altura máxima da imagem */
         }
     </style>
 </head>
