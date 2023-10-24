@@ -68,7 +68,7 @@
             cursor: pointer;
         }
 
-        #avisos {
+       #avisos {
             text-align: center;
             padding: 20px;
             border: 1px solid #ddd; /* Adiciona uma borda ao redor do #avisos */
@@ -81,6 +81,22 @@
         #avisos img {
             max-width: 100%;
             height: auto;
+            display: none; /* Oculta todas as imagens inicialmente */
+            margin: 0 auto; /* Centraliza a imagem */
+        }
+
+        #avisos img.active {
+            display: block; /* Exibe a imagem ativa */
+        }
+
+        .carousel-buttons {
+            margin-top: 10px;
+        }
+
+        .carousel-buttons button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -147,12 +163,47 @@
                 alert('Senha incorreta. Acesso negado.');
             }
         }
-    </script>
+     </script>
 
     <div id="avisos">
         <h2>AVISOS</h2>
-        <img src="https://raw.githubusercontent.com/Lucashs98/quadro/main/aviso.jpeg" alt="Aviso">
+        <img src="aviso1.jpeg" alt="Aviso 1" class="active">
+        <img src="aviso2.jpeg" alt="Aviso 2">
+        <img src="aviso3.jpeg" alt="Aviso 3">
+        <div class="carousel-buttons">
+            <button onclick="prevAviso()">Anterior</button>
+            <button onclick="nextAviso()">Próximo</button>
+        </div>
     </div>
+
+    <script>
+        let currentAvisoIndex = 0;
+        const avisos = document.querySelectorAll('#avisos img');
+
+        function showAviso(index) {
+            avisos.forEach((aviso, i) => {
+                if (i === index) {
+                    aviso.classList.add('active');
+                } else {
+                    aviso.classList.remove('active');
+                }
+            });
+        }
+
+        function prevAviso() {
+            currentAvisoIndex = (currentAvisoIndex - 1 + avisos.length) % avisos.length;
+            showAviso(currentAvisoIndex);
+        }
+
+        function nextAviso() {
+            currentAvisoIndex = (currentAvisoIndex + 1) % avisos.length;
+            showAviso(currentAvisoIndex);
+        }
+
+        setInterval(() => {
+            nextAviso();
+        }, 10000); // Troca de imagem a cada 3 segundos
+    </script>
 
 </body>
 </html>
