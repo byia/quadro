@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CENTRAL DE FATURAMENTOS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
+
+        .menu {
+            position: relative;
+        }
+
+        .menu span {
+            cursor: pointer;
+        }
+
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .menu:hover .submenu {
+            display: block;
+        }
+
+        .submenu a {
+            display: block;
+            margin-bottom: 5px;
+            color: black;
+            text-decoration: none;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+       #avisos {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ddd; /* Adiciona uma borda ao redor do #avisos */
+        }
+
+        #avisos h2 {
+            margin-bottom: 10px; /* Adiciona margem inferior para separar a palavra "AVISOS" da imagem */
+        }
+
+        #avisos img {
+            max-width: 100%;
+            height: auto;
+            display: none; /* Oculta todas as imagens inicialmente */
+            margin: 0 auto; /* Centraliza a imagem */
+        }
+
+        #avisos img.active {
+            display: block; /* Exibe a imagem ativa */
+        }
+
+        .carousel-buttons {
+            margin-top: 10px;
+        }
+
+        .carousel-buttons button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        
+    #copiaECola {
+        max-width: 600px;
+        margin: 80px auto; /* Adiciona espaço superior de 50px e centraliza */
+        text-align: center;
+        background-color: #f9f9f9;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #copiaECola h2 {
+        font-size: 37px;
+        margin-bottom: 15px;
+    }
+
+    #copiaECola p {
+        font-size: 19px;
+        margin-bottom: 10px;
+    }
+
+    #inputText {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>CENTRAL DE FATURAMENTOS</h1>
+        <div>
+            <a href="javascript:void(0);" onclick="openPopup('login.html')" class="button">QUADRO ONLINE</a>
+            <a href="javascript:void(0);" onclick="checkPasswordAndRedirect()" class="button">RELATÓRIO</a>
+        </div>
+    </header>
+
+    <nav>
+        <div class="menu">
+            <span>FATURAMENTO</span>
+            <div class="submenu">
+                <a href="https://dealer.gruposaga.com.br/Portal/default.html" class="button" target="_blank">Dealer</a>
+                <a href="http://nbs.gruposaga.com.br/" class="button" target="_blank">NBS</a>
+                <a href="https://app.vianuvem.com.br/auto/home" class="button" target="_blank">Via Nuvem</a>
+                <a href="https://www.itau.com.br/empresas" class="button" target="_blank">ITAU</a>
+            </div>
+        </div>
+
+        <div class="menu">
+            <span>VEÍCULOS USADOS</span>
+            <div class="submenu">
+                <a href="https://portal.detran.go.gov.br/sna/" class="button" target="_blank">DETRAN</a>
+                <a href="https://saganet-my.sharepoint.com/:x:/g/personal/lucas_hsilveira_gruposaga_com_br/EXu9A1AcwCNNsy7gH2YTSiEBzDbHVKOBK1xCJ85VvI175Q" class="button" target="_blank">Planilha Receita</a>
+                <a href="https://docs.google.com/spreadsheets/d/1xRisVEoBwegFcoUKwEbUGBGcMS3shCo3OV6qmEGvKWc/edit#gid=661620869" class="button" target="_blank">Planilha Gestauto</a>
+                <a href="https://lucashs98.github.io/quadro/pagina2" class="button" target="_blank">Copia e Cola</a>
+            </div>
+        </div>
+
+        <div class="menu">
+            <span>MONTADORA</span>
+            <div class="submenu">
+                <a href="https://oraculo.asisprojetos.com.br/" class="button" target="_blank">ORACULO</a>
+            </div>
+        </div>
+
+        <div class="menu">
+            <span>CONSULTAS E GERAIS</span>
+            <div class="submenu">
+                <a href="https://renavemais.com.br/" class="button" target="_blank">RENAVE+</a>
+                <a href="https://outlook.office.com/mail/" class="button" target="_blank">OUTLOOK</a>
+                <a href="http://www.sintegra.gov.br/" class="button" target="_blank">SINTEGRA</a>
+                <a href="https://solucoes.receita.fazenda.gov.br/servicos/cnpjreva/cnpjreva_solicitacao.asp" class="button" target="_blank">Consulta CNPJ</a>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        function openPopup(url) {
+            window.open(url, 'popup', 'width=600,height=400');
+        }
+
+        function checkPasswordAndRedirect() {
+            const enteredPassword = prompt('Digite a senha para acessar o Relatorio:');
+            const correctPassword = 'Analise123';
+
+            if (enteredPassword === correctPassword) {
+                window.location.href = 'https://docs.google.com/spreadsheets/d/1FTuk12olE8U1itbBS2dzqq5KA0iqPp_AnQBPDGuaAv0/edit?usp=sharing';
+            } else {
+                alert('Senha incorreta. Acesso negado.');
+            }
+        }
+     </script>
+
+<div id="copiaECola">
+    <h2>Copia e Cola</h2>
+    <p>Cole seu texto aqui:</p>
+    <input type="text" id="inputText" placeholder="Insira o texto" oninput="removeSpecificCharactersAndCopy()">
+</div>
+
+<script>
+    function removeSpecificCharactersAndCopy() {
+        var inputElement = document.getElementById("inputText");
+        var inputValue = inputElement.value;
+
+        // Remove "R$"
+        inputValue = inputValue.replace(/\bR\$\b/g, "");
+
+        // Remove " "; "."; "-"; "/"
+        var cleanedValue = inputValue.replace(/[ .\-/]/g, "");
+
+        // Remove espaços em branco ou vazios no final
+        cleanedValue = cleanedValue.trim();
+
+        inputElement.value = cleanedValue;
+        inputElement.select();
+        document.execCommand("copy");
+    }
+</script>
+
+</body>
+</html>
