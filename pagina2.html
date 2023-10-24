@@ -207,12 +207,12 @@
         var inputValue = inputElement.value;
 
         // Remove "R$"
-        inputValue = inputValue.replace(/\bR\$\b/g, "");
+        inputValue = inputValue.replace(/R\s*\$/g, "");
 
         // Remove " "; "."; "-"; "/"
         var cleanedValue = inputValue.replace(/[ .\-/]/g, "");
 
-        // Remove espaços em branco ou vazios no final
+        // Remove espaços em branco ou vazios no início e no final
         cleanedValue = cleanedValue.trim();
 
         inputElement.value = cleanedValue;
