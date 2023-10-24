@@ -202,15 +202,27 @@
 </div>
 
 <script>
+    function handlePaste(event) {
+        // Captura o texto colado
+        var pastedText = (event.clipboardData || window.clipboardData).getData('text');
+
+        // Remove "R$"; " "; "."; "-"; "/"
+        var cleanedValue = pastedText.replace(/R\s*\$|[ .\-/]/g, "");
+
+        // Remove espaços em branco ou vazios no início e no final
+        cleanedValue = cleanedValue.trim();
+
+        // Substitui o valor do input pelo texto tratado
+        var inputElement = document.getElementById("inputText");
+        inputElement.value = cleanedValue;
+    }
+
     function removeSpecificCharactersAndCopy() {
         var inputElement = document.getElementById("inputText");
         var inputValue = inputElement.value;
 
-        // Remove "R$"
-        inputValue = inputValue.replace(/R\s*\$/g, "");
-
-        // Remove " "; "."; "-"; "/"
-        var cleanedValue = inputValue.replace(/[ .\-/]/g, "");
+        // Remove "R$"; " "; "."; "-"; "/"
+        var cleanedValue = inputValue.replace(/R\s*\$|[ .\-/]/g, "");
 
         // Remove espaços em branco ou vazios no início e no final
         cleanedValue = cleanedValue.trim();
