@@ -28,8 +28,10 @@
     <script>
         // Função para preencher as opções de lojas
         function preencherLojas() {
+            var url = "https://raw.githubusercontent.com/Lucashs98/quadro/0f5dd273800c5f69e01505dfbbf830902ce1d718/regra.xlsx";
+
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "quadro/regra.xlsx", true);
+            xhr.open("GET", url, true);
             xhr.responseType = "arraybuffer";
 
             xhr.onload = function (e) {
@@ -53,9 +55,22 @@
         // Função para obter a lista de lojas da planilha
         function obterLojas(workbook) {
             var lojas = [];
+            
+            var sheetName = workbook.SheetNames[0];
+            var sheet = workbook.Sheets[sheetName];
 
-            // Aqui você deve adicionar lógica para extrair as lojas da planilha
-            // Exemplo: percorrer as linhas da planilha e adicionar lojas únicas a 'lojas'
+            // Supondo que as lojas estão na coluna A (começando da linha 2, já que a linha 1 geralmente contém cabeçalhos)
+            var range = XLSX.utils.decode_range(sheet["!ref"]);
+            for (var row = range.s.r + 1; row <= range.e.r; ++row) {
+                var cellAddress = { c: 0, r: row };
+                var cellRef = XLSX.utils.encode_cell(cellAddress);
+                var loja = sheet[cellRef].v;
+                
+                // Adiciona a loja à lista se ainda não estiver presente
+                if (lojas.indexOf(loja) === -1) {
+                    lojas.push(loja);
+                }
+            }
 
             return lojas;
         }
