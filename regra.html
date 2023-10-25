@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Carros</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+    <label for="categoria">Selecione a Categoria:</label>
+    <select id="categoria">
+        <option value="SUV">SUV</option>
+        <option value="PREMIUM">PREMIUM</option>
+        <option value="HATCH/SEDAN">HATCH/SEDAN</option>
+        <option value="REPASSE">REPASSE</option>
+    </select>
+
+    <br>
+
+    <label for="loja">Selecione a Loja:</label>
+    <select id="loja"></select>
+
+    <br>
+
+    <button onclick="consultar()">Consultar</button>
+
+    <script>
+        // Função para preencher as opções de lojas
+        function preencherLojas() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "quadro/regra.xlsx", true);
+            xhr.responseType = "arraybuffer";
+
+            xhr.onload = function (e) {
+                var arraybuffer = xhr.response;
+
+                var data = new Uint8Array(arraybuffer);
+                var arr = new Array();
+                for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+                var bstr = arr.join("");
+
+                var workbook = XLSX.read(bstr, { type: "binary" });
+
+                var lojas = obterLojas(workbook);
+
+                preencherOpcoesLojas(lojas);
+            };
+
+            xhr.send();
+        }
+
+        // Função para obter a lista de lojas da planilha
+        function obterLojas(workbook) {
+            var lojas = [];
+
+            // Aqui você deve adicionar lógica para extrair as lojas da planilha
+            // Exemplo: percorrer as linhas da planilha e adicionar lojas únicas a 'lojas'
+
+            return lojas;
+        }
+
+        // Função para preencher as opções de lojas no dropdown
+        function preencherOpcoesLojas(lojas) {
+            var selectLoja = document.getElementById("loja");
+
+            // Limpa as opções existentes
+            selectLoja.innerHTML = "";
+
+            // Adiciona as novas opções
+            lojas.forEach(function (loja) {
+                var option = document.createElement("option");
+                option.value = loja;
+                option.text = loja;
+                selectLoja.add(option);
+            });
+        }
+
+        // Função para consultar a planilha
+        function consultar() {
+            var categoria = document.getElementById("categoria").value;
+            var loja = document.getElementById("loja").value;
+
+            // Aqui você deve adicionar lógica para procurar na planilha e exibir o resultado
+            // Lembre-se de que você já carregou as lojas ao chamar preencherLojas()
+
+            console.log("Categoria:", categoria);
+            console.log("Loja:", loja);
+        }
+
+        // Preenche as opções de lojas ao carregar a página
+        window.onload = function () {
+            preencherLojas();
+        };
+    </script>
+
+</body>
+</html>
