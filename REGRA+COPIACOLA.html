@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CENTRAL DE FATURAMENTOS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
+
+        .menu {
+            position: relative;
+        }
+
+        .menu span {
+            cursor: pointer;
+        }
+
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .menu:hover .submenu {
+            display: block;
+        }
+
+        .submenu a {
+            display: block;
+            margin-bottom: 5px;
+            color: black;
+            text-decoration: none;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        
+        #copiaECola {
+            flex: 1;
+            max-width: 600px;
+            margin: 80px auto;
+            text-align: center;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #copiaECola h2 {
+            font-size: 37px;
+            margin-bottom: 15px;
+        }
+
+        #copiaECola p {
+            font-size: 19px;
+            margin-bottom: 10px;
+        }
+
+        #inputText {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        #codigoRegras {
+            flex: 1;
+            background-color: #f2f2f2;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #codigoRegras h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        #codigoRegras label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        #codigoRegras select {
+            width: 200px;
+            padding: 5px;
+        }
+
+        #codigoRegras button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #codigoRegras button:hover {
+            background-color: #45a049;
+        }
+
+        #codigoRegras #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <h1>CENTRAL DE FATURAMENTOS</h1>
+        <div>
+            <a href="javascript:void(0);" onclick="openPopup('login.html')" class="button">QUADRO ONLINE</a>
+            <a href="javascript:void(0);" onclick="checkPasswordAndRedirect()" class="button">RELATÓRIO</a>
+        </div>
+    </header>
+
+    <nav>
+        <div class="menu">
+            <span>INICIO</span>
+            <div class="submenu">
+                <a href="https://lucashs98.github.io/quadro/" class="button">AVISOS</a>
+            </div>
+        </div>
+
+        <div class="menu">
+            <span>FATURAMENTO</span>
+            <div class="submenu">
+                <a href="https://dealer.gruposaga.com.br/Portal/default.html" class="button" target="_blank">DEALER</a>
+                <a href="http://nbs.gruposaga.com.br/" class="button" target="_blank">NBS</a>
+                <a href="https://app.vianuvem.com.br/auto/home" class="button" target="_blank">VIA NUVEM</a>
+                <a href="https://www.itau.com.br/empresas" class="button" target="_blank">ITAU</a>
+            </div>
+        </div>
+
+        <div class="menu">
+            <span>VEÍCULOS USADOS</span>
+            <div class="submenu">
+                <a href="https://portal.detran.go.gov.br/sna/" class="button" target="_blank">DETRAN</a>
+                <a href="https://saganet-my.sharepoint.com/:x:/g/personal/lucas_hsilveira_gruposaga_com_br/EXu9A1AcwCNNsy7gH2YTSiEBzDbHVKOBK1xCJ85VvI175Q" class="button" target="_blank">PLANILHA RECEITAS</a>
+                <a href="https://docs.google.com/spreadsheets/d/1xRisVEoBwegFcoUKwEbUGBGcMS3shCo3OV6qmEGvKWc/edit#gid=661620869" class="button" target="_blank">PLANILHA GESTAUTO</a>
+                <a href="https://lucashs98.github.io/quadro/pagina2" class="button">COPIA E COLA</a>
+            </div>
+        </div>
+
+        <div class="menu">
+            <span>MONTADORA</span>
+            <div class="submenu">
+                <a href="https://oraculo.asisprojetos.com.br/" class="button" target="_blank">ORACULO</a>
+            </div>
+        </div>
+
+        <div class="menu">
+            <span>CONSULTAS E GERAIS</span>
+            <div class="submenu">
+                <a href="https://renavemais.com.br/" class="button" target="_blank">RENAVE+</a>
+                <a href="https://outlook.office.com/mail/" class="button" target="_blank">OUTLOOK</a>
+                <a href="http://www.sintegra.gov.br/" class="button" target="_blank">SINTEGRA</a>
+                <a href="https://solucoes.receita.fazenda.gov.br/servicos/cnpjreva/cnpjreva_solicitacao.asp" class="button" target="_blank">CONSULTA CNPJ</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="copiaECola">
+        <h2>Copia e Cola</h2>
+        <p>Cole seu texto aqui:</p>
+        <input type="text" id="inputText" placeholder="Insira o texto" oninput="removeSpecificCharactersAndCopy()">
+    </div>
+
+    <!-- Metade Direita: Código de Regras -->
+    <div id="codigoRegras">
+        <h2>Consulta de Entrada</h2>
+
+        <label for="planilha">Anexe a planilha atualizada:</label>
+        <input type="file" id="planilha" accept=".xlsx">
+
+        <br>
+
+        <button onclick="carregarListas()">Carregar Regra</button>
+
+        <br>
+
+        <label for="loja">Selecione a loja de captação:</label>
+        <select id="loja"></select>
+
+        <br>
+
+        <label for="modelo">Selecione o modelo do veículo:</label>
+        <select id="modelo"></select>
+
+        <br>
+
+        <button onclick="consultarEntrada()">Consultar Loja Entrada</button>
+
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        function openPopup(url) {
+            window.open(url, 'popup', 'width=600,height=400');
+        }
+
+        function checkPasswordAndRedirect() {
+            const enteredPassword = prompt('Digite a senha para acessar o Relatorio:');
+            const correctPassword = 'Analise123';
+
+            if (enteredPassword === correctPassword) {
+                window.location.href = 'https://docs.google.com/spreadsheets/d/1FTuk12olE8U1itbBS2dzqq5KA0iqPp_AnQBPDGuaAv0/edit?usp=sharing';
+            } else {
+                alert('Senha incorreta. Acesso negado.');
+            }
+        }
+     </script>
+
+
+
+<script>
+    function handlePaste(event) {
+        // Captura o texto colado
+        var pastedText = (event.clipboardData || window.clipboardData).getData('text');
+
+        // Remove "R$"; " "; "."; "-"; "/"
+        var cleanedValue = pastedText.replace(/R\s*\$|[ .\-/]/g, "");
+
+        // Remove espaços em branco ou vazios no início e no final
+        cleanedValue = cleanedValue.trim();
+
+        // Substitui o valor do input pelo texto tratado
+        var inputElement = document.getElementById("inputText");
+        inputElement.value = cleanedValue;
+    }
+
+    function removeSpecificCharactersAndCopy() {
+        var inputElement = document.getElementById("inputText");
+        var inputValue = inputElement.value;
+
+        // Remove "R$"; " "; "."; "-"; "/"
+        var cleanedValue = inputValue.replace(/R\s*\$|[ .\-/]/g, "");
+
+        // Remove espaços em branco ou vazios no início e no final
+        cleanedValue = cleanedValue.trim();
+
+        inputElement.value = cleanedValue;
+        inputElement.select();
+        document.execCommand("copy");
+    }
+</script>
+
+  <script>
+    let dadosFolha;
+
+    function carregarListas() {
+      const planilhaInput = document.getElementById('planilha');
+      const planilha = planilhaInput.files[0];
+
+      if (!planilha) {
+        alert('Por favor, selecione a planilha.');
+        return;
+      }
+
+      const leitor = new FileReader();
+      leitor.onload = function (e) {
+        const dados = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(dados, { type: 'array' });
+
+        const primeiraFolha = workbook.SheetNames[0];
+        dadosFolha = XLSX.utils.sheet_to_json(workbook.Sheets[primeiraFolha]);
+
+        const lojas = Array.from(new Set(dadosFolha.map(item => item['LOJA DE CAPTAÇÃO'])));
+        const modelos = Array.from(new Set(dadosFolha.map(item => item['MODELO DO VEICULO / AVALIAÇÃO'])));
+
+        const selectLoja = document.getElementById('loja');
+        const selectModelo = document.getElementById('modelo');
+
+        lojas.forEach(loja => {
+          const option = document.createElement('option');
+          option.value = loja;
+          option.textContent = loja;
+          selectLoja.appendChild(option);
+        });
+
+        modelos.forEach(modelo => {
+          const option = document.createElement('option');
+          option.value = modelo;
+          option.textContent = modelo;
+          selectModelo.appendChild(option);
+        });
+      };
+
+      leitor.readAsArrayBuffer(planilha);
+    }
+
+    function consultarEntrada() {
+      const lojaSelecionada = document.getElementById('loja').value;
+      const modeloSelecionado = document.getElementById('modelo').value;
+
+      const entradaEncontrada = dadosFolha.find(item => item['LOJA DE CAPTAÇÃO'] === lojaSelecionada && item['MODELO DO VEICULO / AVALIAÇÃO'] === modeloSelecionado);
+
+      const resultado = entradaEncontrada ? entradaEncontrada['ENTRADA'] : 'Nenhum resultado encontrado';
+      document.getElementById('resultado').innerHTML = `<p>Resultado: <span style="color: #4CAF50;">${resultado}</span></p>`;
+    }
+  </script>
+
+</body>
+</html>
