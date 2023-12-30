@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CENTRAL DE FATURAMENTOS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
+
+        .menu {
+            position: relative;
+        }
+
+        .menu span {
+            cursor: pointer;
+        }
+
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        .menu:hover .submenu {
+            display: block;
+        }
+
+        .submenu a {
+            display: block;
+            margin-bottom: 5px;
+            color: black;
+            text-decoration: none;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+       
+        #codigoRegras {
+            flex: 1;
+            background-color: #f2f2f2;
+            padding: 20px;
+            text-align: center;
+            margin: 80px auto;
+            max-width: 600px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Adicione esta classe para centralizar o #codigoRegras */
+        .centralizado {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        #codigoRegras h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        #codigoRegras label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        #codigoRegras select {
+            width: 200px;
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        #codigoRegras button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #codigoRegras button:hover {
+            background-color: #45a049;
+        }
+
+        #codigoRegras #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+<body>
+
+    <header>
+        <h1>CENTRAL DE FATURAMENTOS</h1>
+        <div>
+            <a href="javascript:void(0);" onclick="openPopup('login.html')" class="button">QUADRO ONLINE</a>
+            <a href="javascript:void(0);" onclick="checkPasswordAndRedirect()" class="button">RELATÓRIO</a>
+        </div>
+    </header>
+
+    <nav>
+        <div class="menu">
+            <span>INICIO</span>
+            <div class="submenu">
+                <a href="https://lucashs98.github.io/quadro/" class="button">AVISOS</a>
+            </div>
+        </div>
+
+        <div class="menu">
+            <span>FATURAMENTO</span>
+            <div class="submenu">
+                <a href="https://dealer.gruposaga.com.br/Portal/default.html" class="button" target="_blank">DEALER</a>
+                <a href="http://nbs.gruposaga.com.br/" class="button" target="_blank">NBS</a>
+                <a href="https://app.vianuvem.com.br/auto/home" class="button" target="_blank">VIA NUVEM</a>
+                <a href="https://www.itau.com.br/empresas" class="button" target="_blank">ITAU</a>
+                <a href="https://lucashs98.github.io/quadro/DADOS.html" class="button" target="_blank">DADOS BANCARIOS</a>
+            </div>
+        </div>
+
+        <div class="menu">
+            <span>VEÍCULOS USADOS</span>
+            <div class="submenu">
+                <a href="https://portal.detran.go.gov.br/sna/" class="button" target="_blank">DETRAN</a>
+                <a href="https://saganet-my.sharepoint.com/:x:/g/personal/lucas_hsilveira_gruposaga_com_br/EXu9A1AcwCNNsy7gH2YTSiEBzDbHVKOBK1xCJ85VvI175Q" class="button" target="_blank">PLANILHA RECEITAS</a>
+                <a href="https://docs.google.com/spreadsheets/d/1xRisVEoBwegFcoUKwEbUGBGcMS3shCo3OV6qmEGvKWc/edit#gid=661620869" class="button" target="_blank">PLANILHA GESTAUTO</a>
+                <a href="https://lucashs98.github.io/quadro/REGRA+COPIACOLA.html" class="button">APOIO ENTRADAS</a>
+            </div>
+        </div>
+
+        <div class="menu">
+            <span>MONTADORA</span>
+            <div class="submenu">
+                <a href="https://oraculo.asisprojetos.com.br/" class="button" target="_blank">ORACULO</a>
+            </div>
+        </div>
+
+        <div class="menu">
+            <span>CONSULTAS E GERAIS</span>
+            <div class="submenu">
+                <a href="https://renavemais.com.br/" class="button" target="_blank">RENAVE+</a>
+                <a href="https://outlook.office.com/mail/" class="button" target="_blank">OUTLOOK</a>
+                <a href="http://www.sintegra.gov.br/" class="button" target="_blank">SINTEGRA</a>
+                <a href="https://solucoes.receita.fazenda.gov.br/servicos/cnpjreva/cnpjreva_solicitacao.asp" class="button" target="_blank">CONSULTA CNPJ</a>
+                <a href="https://mysaga.gruposaga.com.br/" class="button" target="_blank">MYSAGA</a>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        function openPopup(url) {
+            window.open(url, 'popup', 'width=600,height=400');
+        }
+
+        function checkPasswordAndRedirect() {
+            const enteredPassword = prompt('Digite a senha para acessar o Relatorio:');
+            const correctPassword = 'Analise123';
+
+            if (enteredPassword === correctPassword) {
+                window.location.href = 'https://docs.google.com/spreadsheets/d/1FTuk12olE8U1itbBS2dzqq5KA0iqPp_AnQBPDGuaAv0/edit?usp=sharing';
+            } else {
+                alert('Senha incorreta. Acesso negado.');
+            }
+        }
+     </script>
+<div id="container">
+    <h1>Consulta de Conta</h1>
+
+    <label for="loja">Selecione a loja:</label>
+    <select id="loja" onchange="mostrarConta()">
+        <option value="" disabled selected>Escolha a loja</option>
+        <option value="BMW Carros">BMW Carros</option>
+        <option value="BMW Motos">BMW Motos</option>
+        <option value="Tudo Gyn">Tudo Gyn</option>
+        <option value="Tudo Buriti">Tudo Buriti</option>
+        <option value="Saga Korea Gyn">Saga Korea Gyn</option>
+        <option value="Saga Korea Detran">Saga Korea Detran</option>
+        <option value="Saga Korea Ana">Saga Korea Ana</option>
+        <option value="Detroit BR">Detroit BR</option>
+        <option value="Detroit Ana">Detroit Ana</option>
+        <option value="Detroit T-9">Detroit T-9</option>
+        <option value="Nissan Br">Nissan Br</option>
+        <option value="Nissan Rvd">Nissan Rvd</option>
+        <option value="Nissan Ana">Nissan Ana</option>
+        <option value="Nissan 85">Nissan 85</option>
+        <option value="Sn SB Toyota">Sn SB Toyota</option>
+        <option value="Sn SB 85">Sn SB 85</option>
+        <option value="Sn SB T-7">Sn SB T-7</option>
+        <option value="Sn SB Repasse">Sn SB Repasse</option>
+        <option value="Sn SB Anapolis">Sn SB Anapolis</option>
+        <option value="Sn SB Buriti">Sn SB Buriti</option>
+        <option value="Paris Seminovos">Paris Seminovos</option>
+        <option value="Seminovos Premium">Seminovos Premium</option>
+        <option value="Kasa Motors Gyn">Kasa Motors Gyn</option>
+        <option value="Kasa Motors Ana">Kasa Motors Ana</option>
+        <option value="Mototech">Mototech</option>
+        <option value="Saga T7">Saga T7</option>
+    </select>
+
+    <div id="contaResultado"></div>
+
+    <script>
+        function mostrarConta() {
+            var lojaSelecionada = document.getElementById("loja").value;
+            var conta;
+
+            switch (lojaSelecionada) {
+                case "BMW Carros":
+                case "BMW Motos":
+                    conta = "BANCO ITAU, AGENCIA:4378 CONTA:67325-7 - CHAVE PIX:20374616000130";
+                    break;
+                case "Tudo Gyn":
+                case "Tudo Buriti":
+                    conta = "BANCO ITAU, AGENCIA:4378 CONTA:41635-0 - CHAVE PIX:14234954000173";
+                    break;
+                case "Saga Korea Gyn":
+                    conta = "BANCO ITAU, AGENCIA:0656 CONTA:8212-0 - CHAVE PIX:12657826000530";
+                    break;
+                case "Saga Korea Detran":
+                    conta = "BANCO ITAU, AGENCIA:0656 CONTA:8217-9 - CHAVE PIX:12657826000611";
+                    break;
+                case "Saga Korea Ana":
+                    conta = "BANCO ITAU, AGENCIA:0656 CONTA:8219-5 - CHAVE PIX:12657826000700";
+                    break;
+                case "Detroit BR":
+                case "Detroit Ana":
+                case "Detroit T-9":
+                    conta = "BANCO ITAU, AGENCIA:4378 CONTA:73254-1 - CHAVE PIX:19945014000106";
+                    break;
+                case "Nissan Br":
+                case "Nissan Rvd":
+                case "Nissan Ana":
+                case "Nissan 85":
+                    conta = "BANCO ITAU, AGENCIA:0656 CONTA:8684-0 - CHAVE PIX:11727257000328";
+                    break;
+                case "Sn SB Toyota":
+                case "Sn SB 85":
+                case "Sn SB T-7":
+                case "Sn SB Repasse":
+                case "Sn SB Anapolis":
+                case "Sn SB Buriti":
+                    conta = "BANCO ITAU, AGENCIA:4378 CONTA:94185-2 - CHAVE PIX:09102044002302";
+                    break;
+                case "Paris Seminovos":
+                    conta = "BANCO ITAU, AGENCIA:4378 CONTA:85969-0 - CHAVE PIX:16803158000997";
+                    break;
+                case "Seminovos Premium":
+                    conta = "BANCO ITAU, AGENCIA:4378 CONTA:67325-7 - CHAVE PIX:20374616000130";
+                    break;
+                case "Kasa Motors Gyn":
+                    conta = "BANCO ITAU, AGENCIA:4378 CONTA:64889-5 - CHAVE PIX:05471879000173";
+                    break;
+                case "Kasa Motors Ana":
+                    conta = "BANCO ITAU, AGENCIA:6556 CONTA:3818-7 - CHAVE PIX:05471879000254";
+                    break;
+                case "Mototech":
+                    conta = "BANCO ITAU, AGENCIA:4378 CONTA:83708-4 - CHAVE PIX:26343161000171";
+                    break;
+                case "Saga T7":
+                    conta = "BANCO ITAU, AGENCIA:0656 CONTA:2337-1 - CHAVE PIX:01104751000110";
+                    break;
+                default:
+                    conta = "Loja não encontrada";
+            }
+
+            document.getElementById("contaResultado").innerHTML = "<p>Conta:</p><p><strong>" + conta + "</strong></p>";
+        }
+    </script>
+</div>
+
+<script>
+    function copiarResultado() {
+    var resultado = document.getElementById("contaResultado");
+    var textarea = document.createElement("textarea");
+    textarea.value = resultado.textContent.trim();
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    alert("Resultado copiado para a área de transferência!");
+}
+</script>
+</body>
+</html>
