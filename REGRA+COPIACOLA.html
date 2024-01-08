@@ -209,9 +209,6 @@
     <div id="codigoRegras">
         <h2>Consulta de Entrada</h2>
 
-        <label for="planilha">Anexe a planilha atualizada:</label>
-        <input type="file" id="planilha" accept=".xlsx">
-
         <br>
 
         <button onclick="carregarListas()">Carregar Regra</button>
@@ -284,60 +281,119 @@
     }
 </script>
 
-  <script>
-    let dadosFolha;
+<script>
+  // Dados pré-definidos
+  const dadosFolha = [
+    { 'LOJA DE CAPTAÇÃO': 'HYUNDAI CJ', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD T7' },
+    { 'LOJA DE CAPTAÇÃO': 'HYUNDAI CJ', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'HYUNDAI CJ', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
+    { 'LOJA DE CAPTAÇÃO': 'HYUNDAI CJ', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN BURITI' },
+    { 'LOJA DE CAPTAÇÃO': 'HYUNDAI T9', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD T7' },
+    { 'LOJA DE CAPTAÇÃO': 'HYUNDAI T9', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'HYUNDAI T9', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
+    { 'LOJA DE CAPTAÇÃO': 'HYUNDAI T9', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN T7' },
+    { 'LOJA DE CAPTAÇÃO': 'TOYOTA BURITI', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD 85' },
+    { 'LOJA DE CAPTAÇÃO': 'TOYOTA BURITI', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'TOYOTA BURITI', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
+    { 'LOJA DE CAPTAÇÃO': 'TOYOTA BURITI', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN BURITI' },
+    { 'LOJA DE CAPTAÇÃO': 'TOYOTA GYN', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD T7' },
+    { 'LOJA DE CAPTAÇÃO': 'TOYOTA GYN', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'TOYOTA GYN', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
+    { 'LOJA DE CAPTAÇÃO': 'TOYOTA GYN', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN T7' },
+    { 'LOJA DE CAPTAÇÃO': 'TUDO MUTIRÃO', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD 85' },
+    { 'LOJA DE CAPTAÇÃO': 'TUDO MUTIRÃO', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'TUDO MUTIRÃO', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
+    { 'LOJA DE CAPTAÇÃO': 'TUDO MUTIRÃO', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN BURITI' },
+    { 'LOJA DE CAPTAÇÃO': 'TUDO BURITI', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD 85' },
+    { 'LOJA DE CAPTAÇÃO': 'TUDO BURITI', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'TUDO BURITI', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
+    { 'LOJA DE CAPTAÇÃO': 'TUDO BURITI', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN BURITI' },
+    { 'LOJA DE CAPTAÇÃO': 'NISSAN BR', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD 85' },
+    { 'LOJA DE CAPTAÇÃO': 'NISSAN BR', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'NISSAN BR', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
+    { 'LOJA DE CAPTAÇÃO': 'NISSAN BR', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN BURITI' },
+    { 'LOJA DE CAPTAÇÃO': 'NISSAN 85', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD 85' },
+    { 'LOJA DE CAPTAÇÃO': 'NISSAN 85', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'NISSAN 85', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
+    { 'LOJA DE CAPTAÇÃO': 'NISSAN 85', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN BURITI' },
+    { 'LOJA DE CAPTAÇÃO': 'JEEP BR', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD 85' },
+    { 'LOJA DE CAPTAÇÃO': 'JEEP BR', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'JEEP BR', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
+    { 'LOJA DE CAPTAÇÃO': 'JEEP BR', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN T7' },
+    { 'LOJA DE CAPTAÇÃO': 'JEEP T9', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD T7' },
+    { 'LOJA DE CAPTAÇÃO': 'JEEP T9', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'JEEP T9', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
+    { 'LOJA DE CAPTAÇÃO': 'JEEP T9', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN T7' },
+    { 'LOJA DE CAPTAÇÃO': 'VW T7', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD T7' },
+    { 'LOJA DE CAPTAÇÃO': 'VW T7', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'VW T7', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
+    { 'LOJA DE CAPTAÇÃO': 'VW T7', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN T7' },
+    { 'LOJA DE CAPTAÇÃO': 'SN BURITI', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD 85' },
+    { 'LOJA DE CAPTAÇÃO': 'SN BURITI', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'SN BURITI', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
+    { 'LOJA DE CAPTAÇÃO': 'SN BURITI', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN BURITI' },
+    { 'LOJA DE CAPTAÇÃO': 'SN ANAPOLIS', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN ANAPOLIS' },
+    { 'LOJA DE CAPTAÇÃO': 'SN ANAPOLIS', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'SN ANAPOLIS' },
+    { 'LOJA DE CAPTAÇÃO': 'SN ANAPOLIS', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN ANAPOLIS' },
+    { 'LOJA DE CAPTAÇÃO': 'SN ANAPOLIS', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN ANAPOLIS' },
+    { 'LOJA DE CAPTAÇÃO': 'SN T7', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD T7' },
+    { 'LOJA DE CAPTAÇÃO': 'SN T7', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'SN T7', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
+    { 'LOJA DE CAPTAÇÃO': 'SN T7', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN T7' },
+    { 'LOJA DE CAPTAÇÃO': 'BMW', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD 85' },
+    { 'LOJA DE CAPTAÇÃO': 'BMW', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'BMW', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
+    { 'LOJA DE CAPTAÇÃO': 'BMW', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN T7' },
+    { 'LOJA DE CAPTAÇÃO': 'SN OFF ROAD T7', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN T7' },
+    { 'LOJA DE CAPTAÇÃO': 'SN OFF ROAD T7', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
+    { 'LOJA DE CAPTAÇÃO': 'SN OFF ROAD T7', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'SN OFF ROAD T7', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD T7' },
+    { 'LOJA DE CAPTAÇÃO': 'SN OFF ROAD 85', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN BURITI' },
+    { 'LOJA DE CAPTAÇÃO': 'SN OFF ROAD 85', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN ANAPOLIS' },
+    { 'LOJA DE CAPTAÇÃO': 'SN OFF ROAD 85', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'SN OFF ROAD 85', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD 85' },
+    { 'LOJA DE CAPTAÇÃO': 'RAM GYN', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN OFF ROAD T7' },
+    { 'LOJA DE CAPTAÇÃO': 'RAM GYN', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'BMW' },
+    { 'LOJA DE CAPTAÇÃO': 'RAM GYN', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
+    { 'LOJA DE CAPTAÇÃO': 'RAM GYN', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN T7' },
+  ];
 
-    function carregarListas() {
-      const planilhaInput = document.getElementById('planilha');
-      const planilha = planilhaInput.files[0];
+  function carregarListas() {
+    // Limpar opções existentes
+    document.getElementById('loja').innerHTML = '';
+    document.getElementById('modelo').innerHTML = '';
 
-      if (!planilha) {
-        alert('Por favor, selecione a planilha.');
-        return;
-      }
+    const lojas = Array.from(new Set(dadosFolha.map(item => item['LOJA DE CAPTAÇÃO'])));
+    const modelos = Array.from(new Set(dadosFolha.map(item => item['MODELO DO VEICULO / AVALIAÇÃO'])));
 
-      const leitor = new FileReader();
-      leitor.onload = function (e) {
-        const dados = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(dados, { type: 'array' });
+    const selectLoja = document.getElementById('loja');
+    const selectModelo = document.getElementById('modelo');
 
-        const primeiraFolha = workbook.SheetNames[0];
-        dadosFolha = XLSX.utils.sheet_to_json(workbook.Sheets[primeiraFolha]);
+    lojas.forEach(loja => {
+      const option = document.createElement('option');
+      option.value = loja;
+      option.textContent = loja;
+      selectLoja.appendChild(option);
+    });
 
-        const lojas = Array.from(new Set(dadosFolha.map(item => item['LOJA DE CAPTAÇÃO'])));
-        const modelos = Array.from(new Set(dadosFolha.map(item => item['MODELO DO VEICULO / AVALIAÇÃO'])));
+    modelos.forEach(modelo => {
+      const option = document.createElement('option');
+      option.value = modelo;
+      option.textContent = modelo;
+      selectModelo.appendChild(option);
+    });
+  }
 
-        const selectLoja = document.getElementById('loja');
-        const selectModelo = document.getElementById('modelo');
+  function consultarEntrada() {
+    const lojaSelecionada = document.getElementById('loja').value;
+    const modeloSelecionado = document.getElementById('modelo').value;
 
-        lojas.forEach(loja => {
-          const option = document.createElement('option');
-          option.value = loja;
-          option.textContent = loja;
-          selectLoja.appendChild(option);
-        });
+    const entradaEncontrada = dadosFolha.find(item => item['LOJA DE CAPTAÇÃO'] === lojaSelecionada && item['MODELO DO VEICULO / AVALIAÇÃO'] === modeloSelecionado);
 
-        modelos.forEach(modelo => {
-          const option = document.createElement('option');
-          option.value = modelo;
-          option.textContent = modelo;
-          selectModelo.appendChild(option);
-        });
-      };
-
-      leitor.readAsArrayBuffer(planilha);
-    }
-
-    function consultarEntrada() {
-      const lojaSelecionada = document.getElementById('loja').value;
-      const modeloSelecionado = document.getElementById('modelo').value;
-
-      const entradaEncontrada = dadosFolha.find(item => item['LOJA DE CAPTAÇÃO'] === lojaSelecionada && item['MODELO DO VEICULO / AVALIAÇÃO'] === modeloSelecionado);
-
-      const resultado = entradaEncontrada ? entradaEncontrada['ENTRADA'] : 'Nenhum resultado encontrado';
-      document.getElementById('resultado').innerHTML = `<p>Resultado: <span style="color: #4CAF50;">${resultado}</span></p>`;
-    }
-  </script>
+    const resultado = entradaEncontrada ? entradaEncontrada['ENTRADA'] : 'Nenhum resultado encontrado';
+    document.getElementById('resultado').innerHTML = `<p>Resultado: <span style="color: #4CAF50;">${resultado}</span></p>`;
+  }
+</script>
 
 </body>
 </html>
