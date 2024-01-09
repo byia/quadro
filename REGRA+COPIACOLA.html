@@ -393,7 +393,7 @@
 
     const entradaEncontrada = dadosFolha.find(item => item['LOJA DE CAPTAÇÃO'] === lojaSelecionada && item['MODELO DO VEICULO / AVALIAÇÃO'] === modeloSelecionado);
 
-    const resultado = entradaEncontrada ? entradaEncontrada['ENTRADA'] : 'Nenhum resultado encontrado';
+    const resultado = entradaEncontrada ? entradaEncontrada['ENTRADA'] : 'Nenhum resultado encontrado, consultar o Matheus';
     document.getElementById('resultado').innerHTML = `<p>Resultado: <span style="color: #4CAF50;">${resultado}</span></p>`;
   }
 </script>
