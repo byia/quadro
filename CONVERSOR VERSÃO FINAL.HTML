@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PAGAMENTOS BAIXA</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #content {
+            max-width: 600px;
+            width: 100%;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 40px;
+            color: #333;
+            text-align: center; /* Centraliza o texto horizontalmente */
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid #ccc;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+            font-size: 24px;
+            color: #555;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        input[type="text"] {
+            width: 96%;
+            font-size: 24px;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        footer {
+            font-size: 14px;
+            margin-top: 40px;
+            color: #777;
+            text-align: center; /* Centraliza o texto horizontalmente */
+        }
+
+        .validation-box {
+            border: 2px solid #ccc;
+            background-color: #fff;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+            display: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .validation-box p {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .validation-box p.success {
+            color: green;
+        }
+
+        .validation-box p.error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <h1>PAGAMENTOS BAIXA</h1>
+        <hr>
+        <table id="paymentTable">
+            <tr>
+                <th>Cole a linha do banco aqui:</th>
+            </tr>
+            <tr>
+                <td><input type="text" id="linha1"></td>
+            </tr>
+        </table>
+
+        <div class="validation-box" id="validation">
+            <!-- Seção de validação será adicionada aqui -->
+        </div>
+
+        <footer>&copy; CENTRAL DE FATURAMENTOS</footer>
+
+    <script>
+       document.getElementById("paymentTable").addEventListener("paste", function(e) {
+    e.preventDefault();
+    var text = e.clipboardData.getData("text/plain");
+
+    var isSispagPix = /(\d{2} \/ [A-ZÇÇÁÀÃÉÈÊÍÌÎÓÒÔÕÚÙÛ]+ SISPAG)/.test(text);
+    var isSispag = text.includes("SISPAG");
+    var isInternet = text.includes("INTERNET");
+
+    if (isSispagPix) {
+        // Extrai a DATA, DESCRIÇÃO e VALOR
+        var partes = text.split(" ");
+        var data = partes.slice(0, 3).join(" "); // Mantém a data no formato DD / MM / AAAA
+        var descricao = partes.slice(4).join(" ").substr(0, 9); // Limita a DESCRIÇÃO a 9 dígitos
+        var valor = partes[partes.length - 1];
+
+        var resultado = data + " + " + descricao + " + " + valor;
+        document.getElementById("linha1").value = resultado;
+    } else if (isSispag) {
+        // Extrai a DATA, DESCRIÇÃO e VALOR
+        var partes = text.split(" ");
+        var data = partes[0];
+        var descricao = partes.slice(2).join(" ").substr(0, 9); // Limita a DESCRIÇÃO a 9 dígitos
+        var valor = partes[partes.length - 1];
+
+        var resultado = data + " + " + descricao + " + " + valor;
+        document.getElementById("linha1").value = resultado;
+    } else if (isInternet) {
+        // Extrai a DATA, DESCRIÇÃO e VALOR
+        var partes = text.split(" ");
+        var data = partes[0];
+        var descricao = partes.slice(2, -1).join(" ").substr(0, 9); // Limita a DESCRIÇÃO a 9 dígitos
+        var valor = partes[partes.length - 1];
+
+        var resultado = data + " + " + descricao + " + " + valor;
+        document.getElementById("linha1").value = resultado;
+    } else {
+        text = text.replace(/(TED|PIX|TBI|DI DIN|DI CHQ|EXIBIR|exibir|ocultar|OCULTAR|TRANSF|AG. TEF|TEF|R\$)\s*/g, '');
+
+        var dataMatch = text.match(/^\d{2} \/ [A-Za-zçÇáÁàÀâÂãÃéÉèÈêÊíÍìÌîÎóÓòÒôÔõÕúÚùÙûÛ]+\b/);
+        var data = dataMatch ? dataMatch[0] : "";
+
+        text = text.replace(data, '');
+
+        text = text.replace(/\s\d{4}\s/, ' + ');
+
+        var resultado = data + " + " + text.trim();
+
+        document.getElementById("linha1").value = resultado;
+    }
+
+    var validationDiv = document.getElementById("validation");
+    validationDiv.innerHTML = "";
+
+    var success = true;
+
+    if (!data) {
+        validationDiv.innerHTML += "<p class='error'>Etapa 1: Data não encontrada.</p>";
+        success = false;
+    }
+    if (text.trim() === "") {
+        validationDiv.innerHTML += "<p class='error'>Etapa 2: Descrição ou Valor não encontrados.</p>";
+        success = false;
+    }
+
+    validationDiv.innerHTML += "<p class='success'>Texto Bruto: " + e.clipboardData.getData("text/plain") + "</p>";
+
+    if (success) {
+        validationDiv.innerHTML += "<p class='success'>OK</p>";
+    }
+    validationDiv.style.display = "block";
+
+    // Define um timeout para limpar o campo de entrada e a tela de validação após 10 segundos
+    setTimeout(function() {
+        document.getElementById("linha1").value = "";
+        document.getElementById("validation").style.display = "none";
+    }, 15000); // 15000 milissegundos = 15 segundos
+});
+
+
+    </script>
+</body>
+</html>
