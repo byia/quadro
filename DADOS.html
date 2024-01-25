@@ -68,60 +68,57 @@
             cursor: pointer;
         }
        
-        #codigoRegras {
-            flex: 1;
-            background-color: #f2f2f2;
-            padding: 20px;
-            text-align: center;
-            margin: 80px auto;
-            max-width: 600px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+#codigoRegras {
+    flex: 1;
+    background-color: #f9f9f9; /* Mudei a cor de fundo para um tom mais claro */
+    padding: 20px;
+    text-align: center;
+    margin: 80px auto;
+    max-width: 600px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-        /* Adicione esta classe para centralizar o #codigoRegras */
-        .centralizado {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
+#codigoRegras h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333; /* Adicionei uma cor ao título */
+}
 
-        #codigoRegras h2 {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
+#codigoRegras label {
+    display: block;
+    margin: 10px 0;
+}
 
-        #codigoRegras label {
-            display: block;
-            margin: 10px 0;
-        }
+#codigoRegras select {
+    width: 100%; /* Alterei a largura para ocupar 100% do contêiner */
+    padding: 10px;
+    font-size: 16px;
+    box-sizing: border-box; /* Garante que o tamanho total inclua padding */
+    margin-bottom: 10px; /* Adicionei margem inferior para separação */
+}
 
-        #codigoRegras select {
-            width: 200px;
-            padding: 5px;
-            font-size: 16px;
-        }
+#codigoRegras button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 30px; /* Ajustei o tamanho do botão */
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Adicionei uma transição suave de cor de fundo */
+}
 
-        #codigoRegras button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+#codigoRegras button:hover {
+    background-color: #45a049;
+}
 
-        #codigoRegras button:hover {
-            background-color: #45a049;
-        }
-
-        #codigoRegras #resultado {
-            margin-top: 20px;
-            font-weight: bold;
-        }
+#codigoRegras #resultado {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #333; /* Adicionei uma cor ao texto do resultado */
+}
     </style>
 
 </head>
@@ -199,46 +196,57 @@
             }
         }
      </script>
-<div id="container">
-    <h1>Consulta de Conta</h1>
+    <div id="container">
+        <h1>Consulta de Conta</h1>
 
-    <label for="loja">Selecione a loja:</label>
-    <select id="loja" onchange="mostrarConta()">
-        <option value="" disabled selected>Escolha a loja</option>
-        <option value="BMW Carros">BMW Carros</option>
-        <option value="BMW Motos">BMW Motos</option>
-        <option value="Tudo Gyn">Tudo Gyn</option>
-        <option value="Tudo Buriti">Tudo Buriti</option>
-        <option value="Saga Korea Gyn">Saga Korea Gyn</option>
-        <option value="Saga Korea Detran">Saga Korea Detran</option>
-        <option value="Saga Korea Ana">Saga Korea Ana</option>
-        <option value="Detroit BR">Detroit BR</option>
-        <option value="Detroit Ana">Detroit Ana</option>
-        <option value="Detroit T-9">Detroit T-9</option>
-        <option value="Nissan Br">Nissan Br</option>
-        <option value="Nissan Rvd">Nissan Rvd</option>
-        <option value="Nissan Ana">Nissan Ana</option>
-        <option value="Nissan 85">Nissan 85</option>
-        <option value="Sn SB Toyota">Sn SB Toyota</option>
-        <option value="Sn SB 85">Sn SB 85</option>
-        <option value="Sn SB T-7">Sn SB T-7</option>
-        <option value="Sn SB Repasse">Sn SB Repasse</option>
-        <option value="Sn SB Anapolis">Sn SB Anapolis</option>
-        <option value="Sn SB Buriti">Sn SB Buriti</option>
-        <option value="Paris Seminovos">Paris Seminovos</option>
-        <option value="Seminovos Premium">Seminovos Premium</option>
-        <option value="Kasa Motors Gyn">Kasa Motors Gyn</option>
-        <option value="Kasa Motors Ana">Kasa Motors Ana</option>
-        <option value="Mototech">Mototech</option>
-        <option value="Saga T7">Saga T7</option>
-    </select>
+        <label for="estado">Selecione o Estado:</label>
+        <select id="estado" onchange="carregarLojas()">
+            <option value="" disabled selected>Escolha o Estado</option>
+            <option value="GO">Goiás</option>
+            <option value="MT">Mato Grosso</option>
+            <!-- Adicione mais estados conforme necessário -->
+        </select>
 
-    <div id="contaResultado"></div>
+        <label for="loja">Selecione a Loja:</label>
+        <select id="loja" onchange="mostrarConta()">
+            <option value="" disabled selected>Escolha a Loja</option>
+            <!-- As opções das lojas serão preenchidas dinamicamente usando JavaScript -->
+        </select>
 
-    <script>
-        function mostrarConta() {
-            var lojaSelecionada = document.getElementById("loja").value;
-            var conta;
+        <div id="contaResultado"></div>
+
+        <script>
+            function carregarLojas() {
+                var estadoSelecionado = document.getElementById("estado").value;
+                var lojas = [];
+
+                // Defina a lista de lojas para cada estado conforme necessário
+                switch (estadoSelecionado) {
+                    case "GO":
+                        lojas = ["BMW Carros", "BMW Motos", "Tudo Gyn", "Tudo Buriti", "Saga Korea Gyn", "Saga Korea Detran", "Saga Korea Ana", "Detroit BR", "Detroit Ana", "Detroit T-9", "Nissan Br", "Nissan Rvd", "Nissan Ana", "Nissan 85", "Sn SB Toyota", "Sn SB 85", "Sn SB T-7", "Sn SB Repasse", "Sn SB Anapolis", "Sn SB Buriti", "Paris Seminovos", "Seminovos Premium", "Kasa Motors Gyn", "Kasa Motors Ana", "Mototech", "Saga T7"];
+                        break;
+                    case "MT":
+                        lojas = ["GRAMARCA VGD", "GRAMARCA CBA", "GRAMARCA CS"];
+                        break;
+                    // Adicione mais casos conforme necessário
+                    default:
+                        lojas = [];
+                }
+
+                // Preencha as opções das lojas no segundo dropdown
+                var lojaDropdown = document.getElementById("loja");
+                lojaDropdown.innerHTML = "<option value='' disabled selected>Escolha a Loja</option>";
+                for (var i = 0; i < lojas.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = lojas[i];
+                    option.text = lojas[i];
+                    lojaDropdown.add(option);
+                }
+            }
+
+            function mostrarConta() {
+                var lojaSelecionada = document.getElementById("loja").value;
+                var conta;
 
             switch (lojaSelecionada) {
                 case "BMW Carros":
@@ -295,6 +303,15 @@
                 case "Saga T7":
                     conta = "BANCO ITAU, AGENCIA:0656 CONTA:2337-1 - CHAVE PIX:01104751000110";
                     break;
+             case "GRAMARCA CBA":
+                        conta = "BANCO ITAU, AGENCIA:6879-9 CONTA:16131-0 - CHAVE PIX:20379987000619";
+                        break;
+             case "GRAMARCA VGD":
+                        conta = "BANCO ITAU, AGENCIA:6879-9 CONTA:16131-0 - CHAVE PIX:20379987000619";
+                        break;
+             case "GRAMARCA CS":
+                        conta = "BANCO ITAU, AGENCIA:6879-9 CONTA:16131-0 - CHAVE PIX:20379987000619";
+                        break;
                 default:
                     conta = "Loja não encontrada";
             }
