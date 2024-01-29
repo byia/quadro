@@ -206,26 +206,31 @@
         showAviso(currentAvisoIndex);
     }
 
-    function checkImageExists(imageSrc, callback) {
+    function imageExists(url, callback) {
         var img = new Image();
-        img.onload = function() { callback(true); };
-        img.onerror = function() { callback(false); };
-        img.src = imageSrc;
+        img.onload = function() {
+            callback(true);
+        };
+        img.onerror = function() {
+            callback(false);
+        };
+        img.src = url;
     }
 
     setInterval(() => {
         nextAviso();
     }, 10000); // Troca de imagem a cada 10 segundos
 
-    // Verifica se a próxima imagem existe antes de exibi-la
     function nextAviso() {
         let nextIndex = (currentAvisoIndex + 1) % avisos.length;
-        checkImageExists(avisos[nextIndex].src, function(exists) {
+        let nextImageUrl = avisos[nextIndex].src;
+
+        imageExists(nextImageUrl, function(exists) {
             if (exists) {
                 currentAvisoIndex = nextIndex;
                 showAviso(currentAvisoIndex);
             } else {
-                nextAviso(); // Se a próxima imagem não existir, chama recursivamente a próxima até encontrar uma válida
+                nextAviso();
             }
         });
     }
