@@ -178,62 +178,43 @@
      </script>
         
 <div id="avisos">
-    <h2>AVISOS</h2>
-    <img src="aviso1.jpeg" alt="Aviso 1" class="active">
-    <img src="aviso2.jpeg" alt="Aviso 2">
-    <img src="aviso3.jpeg" alt="Aviso 3">
-    <div class="carousel-buttons">
-        <button onclick="prevAviso()">Anterior</button>
-        <button onclick="nextAviso()">Próximo</button>
+        <h2>AVISOS</h2>
+        <img src="aviso1.jpeg" alt="Aviso 1" class="active">
+        <img src="aviso2.jpeg" alt="Aviso 2">
+        <div class="carousel-buttons">
+            <button onclick="prevAviso()">Anterior</button>
+            <button onclick="nextAviso()">Próximo</button>
+        </div>
     </div>
-</div>
 
-<script>
-    let currentAvisoIndex = 0;
-    const avisos = document.querySelectorAll('#avisos img');
+    <script>
+        let currentAvisoIndex = 0;
+        const avisos = document.querySelectorAll('#avisos img');
 
-    function showAviso(index) {
-        avisos.forEach((aviso, i) => {
-            aviso.style.display = i === index ? 'block' : 'none';
-        });
-    }
+        function showAviso(index) {
+            avisos.forEach((aviso, i) => {
+                if (i === index) {
+                    aviso.classList.add('active');
+                } else {
+                    aviso.classList.remove('active');
+                }
+            });
+        }
 
-    function prevAviso() {
-        currentAvisoIndex = (currentAvisoIndex - 1 + avisos.length) % avisos.length;
-        showAviso(currentAvisoIndex);
-    }
+        function prevAviso() {
+            currentAvisoIndex = (currentAvisoIndex - 1 + avisos.length) % avisos.length;
+            showAviso(currentAvisoIndex);
+        }
 
-    function nextAviso() {
-        currentAvisoIndex = (currentAvisoIndex + 1) % avisos.length;
-        showAviso(currentAvisoIndex);
-    }
+        function nextAviso() {
+            currentAvisoIndex = (currentAvisoIndex + 1) % avisos.length;
+            showAviso(currentAvisoIndex);
+        }
 
-    function checkImageExists(imageSrc, callback) {
-        var img = new Image();
-        img.onload = function() { callback(true); };
-        img.onerror = function() { callback(false); };
-        img.src = imageSrc;
-    }
-
-    setInterval(() => {
-        nextAviso();
-    }, 10000); // Troca de imagem a cada 10 segundos
-
-    // Verifica se a próxima imagem existe antes de exibi-la
-    function nextAviso() {
-        let nextIndex = (currentAvisoIndex + 1) % avisos.length;
-        checkImageExists(avisos[nextIndex].src, function(exists) {
-            if (exists) {
-                currentAvisoIndex = nextIndex;
-                showAviso(currentAvisoIndex);
-            } else {
-                nextAviso(); // Se a próxima imagem não existir, chama recursivamente a próxima até encontrar uma válida
-            }
-        });
-    }
-</script>
-
-
-
+        setInterval(() => {
+            nextAviso();
+        }, 10000); // Troca de imagem a cada 3 segundos
+    </script>
+    
 </body>
 </html>
