@@ -71,18 +71,18 @@
         #copiaECola {
             flex: 1;
             max-width: 600px;
-            margin: 80px auto;
+            margin: 20px auto;
             text-align: center;
             background-color: #f9f9f9;
-            padding: 20px;
+            padding: 35px;
             border: 1px solid #ddd;
-            border-radius: 10px;
+            border-radius: 19px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         #copiaECola h2 {
             font-size: 37px;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
 
         #copiaECola p {
@@ -91,21 +91,26 @@
         }
 
         #inputText {
-            width: 100%;
-            padding: 10px;
+            width: 90%;
+            padding: 7px;
             font-size: 16px;
         }
 
         #codigoRegras {
             flex: 1;
-            background-color: #f2f2f2;
-            padding: 20px;
+            max-width: 600px;
+            margin: 20px auto;
             text-align: center;
+            background-color: #f9f9f9;
+            padding: 35px;
+            border: 1px solid #ddd;
+            border-radius: 19px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         #codigoRegras h2 {
-            font-size: 24px;
-            margin-bottom: 15px;
+            font-size: 37px;
+            margin-bottom: 5px;
             text-align: center;
         }
 
@@ -134,7 +139,7 @@
         }
 
         #codigoRegras #resultado {
-            margin-top: 20px;
+            margin-top: 10px;
             font-weight: bold;
         }
 
@@ -370,7 +375,7 @@
     { 'LOJA DE CAPTAÇÃO': 'SAGA BYD', 'MODELO DO VEICULO / AVALIAÇÃO': 'SUV / PICK UP / SHOW ROOM', 'ENTRADA': 'SN PASSEIO' },
     { 'LOJA DE CAPTAÇÃO': 'SAGA BYD', 'MODELO DO VEICULO / AVALIAÇÃO': 'REPASSE', 'ENTRADA': 'SN REPASSE' },
     { 'LOJA DE CAPTAÇÃO': 'SAGA BYD', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'SN PASSEIO' },
-    { 'LOJA DE CAPTAÇÃO': 'SAGA BYD', 'MODELO DO VEICULO / AVALIAÇÃO': 'HATCH / SEDAN SHOW ROOM', 'ENTRADA': 'VERIFICAR' },
+    { 'LOJA DE CAPTAÇÃO': 'SAGA BYD', 'MODELO DO VEICULO / AVALIAÇÃO': 'PREMIUM', 'ENTRADA': 'VERIFICAR' },
     
   ];
 
@@ -380,10 +385,7 @@
     document.getElementById('modelo').innerHTML = '';
 
     const lojas = Array.from(new Set(dadosFolha.map(item => item['LOJA DE CAPTAÇÃO'])));
-    const modelos = Array.from(new Set(dadosFolha.map(item => item['MODELO DO VEICULO / AVALIAÇÃO'])));
-
     const selectLoja = document.getElementById('loja');
-    const selectModelo = document.getElementById('modelo');
 
     lojas.forEach(loja => {
       const option = document.createElement('option');
@@ -392,7 +394,27 @@
       selectLoja.appendChild(option);
     });
 
-    modelos.forEach(modelo => {
+    // Chamar a função para carregar modelos quando uma loja é selecionada
+    selectLoja.addEventListener('change', function() {
+      carregarModelosPorLoja();
+      limparResultado();
+    });
+
+    // Chamar a função para carregar modelos inicialmente
+    carregarModelosPorLoja();
+  }
+
+  function carregarModelosPorLoja() {
+    const lojaSelecionada = document.getElementById('loja').value;
+    const modelosFiltrados = dadosFolha
+      .filter(item => item['LOJA DE CAPTAÇÃO'] === lojaSelecionada)
+      .map(item => item['MODELO DO VEICULO / AVALIAÇÃO']);
+
+    const selectModelo = document.getElementById('modelo');
+    // Limpar opções existentes
+    selectModelo.innerHTML = '';
+
+    modelosFiltrados.forEach(modelo => {
       const option = document.createElement('option');
       option.value = modelo;
       option.textContent = modelo;
@@ -408,6 +430,10 @@
 
     const resultado = entradaEncontrada ? entradaEncontrada['ENTRADA'] : 'Nenhum resultado encontrado, consultar o Matheus';
     document.getElementById('resultado').innerHTML = `<p>Resultado: <span style="color: #4CAF50;">${resultado}</span></p>`;
+  }
+
+  function limparResultado() {
+    document.getElementById('resultado').innerHTML = '';
   }
 </script>
 
