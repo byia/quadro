@@ -225,10 +225,10 @@
                 // Defina a lista de lojas para cada estado conforme necessário
                 switch (estadoSelecionado) {
                     case "GO":
-                        lojas = ["BMW Carros", "BMW Motos", "Tudo Gyn", "Tudo Buriti", "Saga Korea Gyn", "Saga Korea Detran", "Saga Korea Ana", "Detroit BR", "Detroit Ana", "Detroit T-9", "Nissan Br", "Nissan Rvd", "Nissan Ana", "Nissan 85", "Sn SB Toyota", "Sn SB 85", "Sn SB T-7", "Sn SB Repasse", "Sn SB Anapolis", "Sn SB Buriti", "Paris Seminovos", "Seminovos Premium", "Kasa Motors Gyn", "Kasa Motors Ana", "Mototech", "Saga T7"];
+                        lojas = ["BMW CARROS", "BMW MOTOS", "TUDO - GM GYN", "TUDO - GM BURITI", "KOREA - HYUNDAI T9", "KOREA - HYUNDAI CJ", "KOREA - HYUNDAI ANA", "DETROIT - JEEP BR", "DETROIT - JEEP ANA", "DETROIT - JEEP T9", "DETROIT - RAM HOUSE", "ESTACAO - NISSAN BR", "ESTACAO - NISSAN RVD", "ESTACAO - NISSAN ANA", "ESTACAO - NISSAN 85", "BRASIL - SN GO OFF ROAD T7", "BRASIL - SN GO OFF ROAD 85", "BRASIL - SN GO T7", "BRASIL - SN GO REPASSE", "BRASIL - SN GO CJ", "BRASIL - SN GO PASSEIO", "BRASIL - SN GO ANAPOLIS", "BRASIL - SN GO BURITI", "SN GO PREMIUM", "KASA MOTORS - TOYOTA GYN", "KASA MOTORS - SN GO OFF ROAD 85", "KASA MOTORS - SN GO OFF ROAD T7", "KASA MOTORS - TOYOTA ANA", "TRIUMPH", "SAGA - VW T7"];
                         break;
                     case "MT":
-                        lojas = ["GRAMARCA VGD", "GRAMARCA CBA", "GRAMARCA CS"];
+                        lojas = ["GRAMARCA -GM CBA", "GRAMARCA - GM VGD", "GRAMARCA - GM CS", "BYD", "SAGA EXCLUSIVE", "JAPAN - NISSAN VGD", "JAPAN - NISSAN CBA", "SEUL - HYUNDAI CBA", "SEUL - HYUNDAI VGD"];
                         break;
                     // Adicione mais casos conforme necessário
                     default:
@@ -251,69 +251,80 @@
                 var conta;
 
             switch (lojaSelecionada) {
-                case "BMW Carros":
-                case "BMW Motos":
+                case "BMW CARROS":
+                case "BMW MOTOS":
                     conta = "BANCO ITAU, AGENCIA:4378 CONTA:67325-7 - CHAVE PIX:20374616000130";
                     break;
-                case "Tudo Gyn":
-                case "Tudo Buriti":
+                case "TUDO - GM GYN":
+                case "TUDO - GM BURITI":
                     conta = "BANCO ITAU, AGENCIA:4378 CONTA:41635-0 - CHAVE PIX:14234954000173";
                     break;
-                case "Saga Korea Gyn":
+                case "KOREA - HYUNDAI T9":
                     conta = "BANCO ITAU, AGENCIA:0656 CONTA:8212-0 - CHAVE PIX:12657826000530";
                     break;
-                case "Saga Korea Detran":
+                case "KOREA - HYUNDAI CJ":
                     conta = "BANCO ITAU, AGENCIA:0656 CONTA:8217-9 - CHAVE PIX:12657826000611";
                     break;
-                case "Saga Korea Ana":
+                case "KOREA - HYUNDAI ANA":
                     conta = "BANCO ITAU, AGENCIA:0656 CONTA:8219-5 - CHAVE PIX:12657826000700";
                     break;
-                case "Detroit BR":
-                case "Detroit Ana":
-                case "Detroit T-9":
+                case "DETROIT - JEEP BR":
+                case "DETROIT - JEEP ANA":
+                case "DETROIT - JEEP T9":
+                case "DETROIT - RAM HOUSE":
                     conta = "BANCO ITAU, AGENCIA:4378 CONTA:73254-1 - CHAVE PIX:19945014000106";
                     break;
-                case "Nissan Br":
-                case "Nissan Rvd":
-                case "Nissan Ana":
-                case "Nissan 85":
+                case "ESTACAO - NISSAN BR":
+                case "ESTACAO - NISSAN RVD":
+                case "ESTACAO - NISSAN ANA":
+                case "ESTACAO - NISSAN 85":
                     conta = "BANCO ITAU, AGENCIA:0656 CONTA:8684-0 - CHAVE PIX:11727257000328";
                     break;
-                case "Sn SB Toyota":
-                case "Sn SB 85":
-                case "Sn SB T-7":
-                case "Sn SB Repasse":
-                case "Sn SB Anapolis":
-                case "Sn SB Buriti":
+                case "BRASIL - SN GO OFF ROAD T7":
+                case "BRASIL - SN GO OFF ROAD 85":
+                case "BRASIL - SN GO T7":
+                case "BRASIL - SN GO REPASSE":
+                case "BRASIL - SN GO CJ":
+                case "BRASIL - SN GO PASSEIO":
+                case "BRASIL - SN GO ANAPOLIS":
+                case "BRASIL - SN GO BURITI":
                     conta = "BANCO ITAU, AGENCIA:4378 CONTA:94185-2 - CHAVE PIX:09102044002302";
                     break;
-                case "Paris Seminovos":
-                    conta = "BANCO ITAU, AGENCIA:4378 CONTA:85969-0 - CHAVE PIX:16803158000997";
-                    break;
-                case "Seminovos Premium":
+                case "SN GO PREMIUM":
                     conta = "BANCO ITAU, AGENCIA:4378 CONTA:67325-7 - CHAVE PIX:20374616000130";
                     break;
-                case "Kasa Motors Gyn":
+                case "KASA MOTORS - TOYOTA GYN":
+                case "KASA MOTORS - SN GO OFF ROAD 85":
+                case "KASA MOTORS - SN GO OFF ROAD T7":
                     conta = "BANCO ITAU, AGENCIA:4378 CONTA:64889-5 - CHAVE PIX:05471879000173";
                     break;
-                case "Kasa Motors Ana":
+                case "KASA MOTORS - TOYOTA ANA":
                     conta = "BANCO ITAU, AGENCIA:6556 CONTA:3818-7 - CHAVE PIX:05471879000254";
                     break;
-                case "Mototech":
+                case "TRIUMPH":
                     conta = "BANCO ITAU, AGENCIA:4378 CONTA:83708-4 - CHAVE PIX:26343161000171";
                     break;
-                case "Saga T7":
+                case "SAGA - VW T7":
                     conta = "BANCO ITAU, AGENCIA:0656 CONTA:2337-1 - CHAVE PIX:01104751000110";
                     break;
-             case "GRAMARCA CBA":
-                        conta = "BANCO ITAU, AGENCIA:6879-9 CONTA:16131-0 - CHAVE PIX:20379987000619";
+             case "GRAMARCA -GM CBA":
+             case "GRAMARCA - GM VGD":
+             case "GRAMARCA - GM CS":
+                        conta = "BANCO ITAU, AGENCIA:6879-9 CONTA:16131-0 - CHAVE PIX:20379987000104";
                         break;
-             case "GRAMARCA VGD":
-                        conta = "BANCO ITAU, AGENCIA:6879-9 CONTA:16131-0 - CHAVE PIX:20379987000619";
-                        break;
-             case "GRAMARCA CS":
-                        conta = "BANCO ITAU, AGENCIA:6879-9 CONTA:16131-0 - CHAVE PIX:20379987000619";
-                        break;
+            case "BYD":
+                    conta = "BANCO SANTANDER, AGENCIA:3444 CONTA:13021202-8 - CHAVE PIX:21333642000263";
+                    break;
+                case "SAGA EXCLUSIVE":
+                    conta = "BANCO ITAU, AGENCIA:6879-9 CONTA:16727-5 - CHAVE PIX:21333642000182";
+                    break;
+                case "JAPAN - NISSAN VGD":
+                case "JAPAN - NISSAN CBA":
+                    conta = "BANCO ITAÚ, AGENCIA:6879-9 CONTA:08086-6 - CHAVE PIX:11748698000144";
+                break;
+                case "SEUL - HYUNDAI CBA":
+                case "SEUL - HYUNDAI VGD":
+                    conta = "BANCO ITAU, AGENCIA:6879-9 CONTA:17752-2 - CHAVE PIX:22280413000100";
                 default:
                     conta = "Loja não encontrada";
             }
