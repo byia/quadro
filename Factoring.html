@@ -35,6 +35,7 @@
       margin-bottom: 15px;
     }
     input[type="number"],
+    input[type="text"],
     select,
     button {
       width: 100%;
@@ -82,19 +83,55 @@
       background-color: #ffffff;
       padding: 20px;
       border-radius: 10px;
-      text-align: center;
+      width: 80%;
+      max-width: 600px;
+      text-align: left;
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      overflow-y: auto; /* Permitir rolagem vertical */
+      max-height: 80%; /* Limitar a altura do modal */
     }
     .modal-content button {
       margin-top: 10px;
+      background-color: #004d40;
+    }
+    .close-btn {
+      background-color: #ff1744;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      float: right;
+    }
+    .finalize-btn {
+      background-color: #4caf50;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+    .contract-table {
+      width: 100%;
+      margin-top: 15px;
+      border-collapse: collapse;
+    }
+    .contract-table th, .contract-table td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    .contract-text {
+      margin-top: 10px;
+      white-space: pre-line;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Barbosa Fomento Mercantil</h2>
-    <h2>Calculadora de Taxas</h2> 
-    <!-- Campo de Prazo -->
+    <h2>Calculadora de Taxas - Factoring</h2>
+
     <div class="input-group">
       <label for="prazo">Tempo (em dias):</label>
       <select id="prazo">
@@ -104,20 +141,17 @@
       </select>
     </div>
 
-    <!-- Campo de Valor Adiantado -->
     <div class="input-group">
       <label for="valor">Valor Adiantado (R$):</label>
       <input type="number" id="valor" min="0" placeholder="Insira o valor adiantado">
     </div>
 
-    <!-- Campo de Risco Adicional -->
     <div class="input-group">
       <label>
-        <input type="checkbox" id="risco"> Incluir Risco (1% adicional)
+        <input type="checkbox" id="risco"> Incluir Risco (1,5% adicional)
       </label>
     </div>
 
-    <!-- Campo de Parcelamento -->
     <div class="input-group">
       <label for="parcelamento">Parcelamento:</label>
       <select id="parcelamento">
@@ -129,20 +163,73 @@
     </div>
 
     <button onclick="calcularTaxa()">Calcular Taxa</button>
+    <button onclick="abrirContrato()">Contrato</button>
 
     <div class="result" id="resultado"></div>
   </div>
 
-  <!-- Modal de Aviso -->
-  <div class="modal" id="modalAviso">
+  <div class="modal" id="modalContrato">
     <div class="modal-content">
-      <p>Para valores acima de R$ 3.000,00 é necessário consultar a disponibilidade.</p>
-      <button onclick="confirmarAviso()">Ciente</button>
+      <button class="close-btn" onclick="fecharModal()">Fechar</button>
+      <h3>Contrato de Antecipação</h3>
+      <div class="input-group">
+        <label>Contratante:</label>
+        <input type="text" id="nomeContratante">
+      </div>
+      <div class="input-group">
+        <label>CNPJ do Contratante:</label>
+        <input type="text" id="cnpjContratante">
+      </div>
+      <div class="input-group">
+        <label>Endereço do Contratante:</label>
+        <input type="text" id="enderecoContratante">
+      </div>
+      <div class="input-group">
+        <label>CEP do Contratante:</label>
+        <input type="text" id="cepContratante">
+      </div>
+      <div class="input-group">
+        <label>Email do Contratante:</label>
+        <input type="email" id="emailContratante">
+      </div>
+      <div class="input-group">
+        <label>Sacado:</label>
+        <input type="text" id="nomeSacado">
+      </div>
+      <div class="input-group">
+        <label>CNPJ do Sacado:</label>
+        <input type="text" id="cnpjSacado">
+      </div>
+      <div class="input-group">
+        <label>Endereço do Sacado:</label>
+        <input type="text" id="enderecoSacado">
+      </div>
+      <div class="input-group">
+        <label>CEP do Sacado:</label>
+        <input type="text" id="cepSacado">
+      </div>
+      <div class="input-group">
+        <label>Email do Sacado:</label>
+        <input type="email" id="emailSacado">
+      </div>
+      <div class="input-group">
+        <label>Nº Doc:</label>
+        <input type="text" id="numDoc" placeholder="Informe o nº do documento">
+      </div>
+      <table class="contract-table">
+        <tr><th>Valor Bruto:</th><td id="valorBruto">R$ 0,00</td></tr>
+        <tr><th>Valor Antecipado:</th><td id="valorAntecipado">R$ 0,00</td></tr>
+        <tr><th>Vencimento:</th><td id="vencimento">30 dias</td></tr>
+        <tr><th>Taxa:</th><td id="taxa">0%</td></tr>
+        <tr><th>Risco:</th><td id="riscoContrato">Não</td></tr>
+      </table>
+      <div class="contract-text" id="contratoTexto"></div>
+      <button class="finalize-btn" onclick="gerarContratoImprimivel()">Finalizar Contrato</button>
     </div>
   </div>
 
   <script>
-    let liberado = false; // Controle para permitir valores acima de 3000 após confirmação
+    let taxaFinal, valorTaxa, valorAntecipado;
 
     function calcularTaxa() {
       const prazo = document.getElementById("prazo").value;
@@ -151,54 +238,93 @@
       const parcelamento = parseInt(document.getElementById("parcelamento").value);
 
       if (isNaN(valor) || valor <= 0) {
-        document.getElementById("resultado").innerHTML = "Por favor, insira um valor válido.";
+        alert("Por favor, insira um valor adiantado válido.");
         return;
       }
 
-      // Verifica o limite de R$ 3.000,00
-      if (valor > 3000 && !liberado) {
-        document.getElementById("modalAviso").style.display = "flex";
-        return;
-      }
-
-      let taxa = 0;
-
-      // Definição das taxas fixas baseadas no valor e prazo
       if (valor <= 500) {
-        taxa = prazo == "30" ? 4 : prazo == "60" ? 5 : 6;
+        taxaFinal = prazo === "30" ? 4 : prazo === "60" ? 5 : 6;
       } else if (valor <= 1500) {
-        taxa = prazo == "30" ? 3.5 : prazo == "60" ? 4.5 : 5.5;
+        taxaFinal = prazo === "30" ? 3.5 : prazo === "60" ? 4.5 : 5.5;
+      } else if (valor <= 2500) {
+        taxaFinal = prazo === "30" ? 2.5 : prazo === "60" ? 3.5 : 4.5;
       } else {
-        taxa = prazo == "30" ? 2.5 : prazo == "60" ? 3.5 : 4.5;
+        alert("Para valores acima de R$3.000,00, consulte disponibilidade.");
+        return;
       }
 
-      // Adiciona 1% caso o risco seja selecionado
-      if (risco) {
-        taxa += 1;
-      }
+      if (risco) taxaFinal += 1.5; // Adiciona 1.5% se risco for marcado
+      if (parcelamento > 0) taxaFinal += parcelamento * 0.3; // Adiciona 0.3% por parcela
 
-      // Adiciona 0.3% por cada parcela
-      if (parcelamento > 0) {
-        taxa += parcelamento * 0.3;
-      }
+      valorTaxa = valor * (taxaFinal / 100);
+      valorAntecipado = valor - valorTaxa;
 
-      // Calcula o valor da taxa e o valor antecipado
-      const valorTaxa = valor * (taxa / 100);
-      const valorAntecipado = valor - valorTaxa;
-
-      // Exibe o resultado
       document.getElementById("resultado").innerHTML = `
-        Taxa Final: ${taxa.toFixed(2)}% <br> 
-        Valor da Taxa: R$ ${valorTaxa.toFixed(2)} <br> 
-        Valor Antecipado: R$ ${valorAntecipado.toFixed(2)}
+        Valor Bruto: R$${valor.toFixed(2)}<br>
+        Taxa Final: ${taxaFinal.toFixed(2)}%<br>
+        Valor Antecipado: R$${valorAntecipado.toFixed(2)}
       `;
     }
 
-    // Função para confirmar o aviso e liberar valores acima de 3000
-    function confirmarAviso() {
-      liberado = true;
-      document.getElementById("modalAviso").style.display = "none";
-      calcularTaxa(); // Recalcula com a permissão liberada
+    function abrirContrato() {
+      document.getElementById("valorBruto").innerText = `R$${(valorTaxa + valorAntecipado).toFixed(2)}`; // Valor Bruto
+      document.getElementById("valorAntecipado").innerText = `R$${valorAntecipado.toFixed(2)}`; // Valor Antecipado
+      document.getElementById("vencimento").innerText = document.getElementById("prazo").value + " dias";
+      document.getElementById("taxa").innerText = `${taxaFinal.toFixed(2)}%`; // Taxa
+      document.getElementById("riscoContrato").innerText = document.getElementById("risco").checked ? "Sim" : "Não";
+
+      document.getElementById("modalContrato").style.display = "flex";
+    }
+
+    function fecharModal() {
+      document.getElementById("modalContrato").style.display = "none";
+    }
+
+    function gerarContratoImprimivel() {
+      const nomeContratante = document.getElementById("nomeContratante").value;
+      const cnpjContratante = document.getElementById("cnpjContratante").value;
+      const enderecoContratante = document.getElementById("enderecoContratante").value;
+      const cepContratante = document.getElementById("cepContratante").value;
+      const emailContratante = document.getElementById("emailContratante").value;
+      const nomeSacado = document.getElementById("nomeSacado").value;
+      const cnpjSacado = document.getElementById("cnpjSacado").value;
+      const enderecoSacado = document.getElementById("enderecoSacado").value;
+      const cepSacado = document.getElementById("cepSacado").value;
+      const emailSacado = document.getElementById("emailSacado").value;
+      const numDoc = document.getElementById("numDoc").value;
+
+      const contratoTexto = `
+      Contratante: ${nomeContratante}\n
+      CNPJ: ${cnpjContratante}\n
+      Endereço: ${enderecoContratante}\n
+      CEP: ${cepContratante}\n
+      E-mail: ${emailContratante}\n\n
+      Sacado: ${nomeSacado}\n
+      CNPJ: ${cnpjSacado}\n
+      Endereço: ${enderecoSacado}\n
+      CEP: ${cepSacado}\n
+      E-mail: ${emailSacado}\n\n
+      Nº Doc: ${numDoc}\n
+      Valor Bruto: R$${(valorTaxa + valorAntecipado).toFixed(2)}\n
+      Valor Antecipado: R$${valorAntecipado.toFixed(2)}\n
+      Vencimento: ${document.getElementById("prazo").value} dias\n
+      Taxa: ${taxaFinal.toFixed(2)}%\n
+      Risco: ${document.getElementById("risco").checked ? "Sim" : "Não"}\n\n
+      ----\n\n
+      1. Por este termo aditivo, as partes acertam a compra e a venda dos créditos aqui discriminados, pela importância
+      neste termo avençada, da qual concordam e se dizem plenamente satisfeitas e de acordo com a precificação
+      negocial, respondendo a Contratante e os Devedores Solidários, pela liquidação dos referidos créditos.\n\n
+      2. Fica convencionado entre as partes que na transmissão dos créditos negociados neste aditivo, a
+      CONTRATANTE/CEDENTE e DEVEDORES SOLIDARIOS respondem pela liquidação dos mesmos e pela solvência dos
+      devedores.\n\n
+      3. A Contratante declara ter recebido neste ato o valor líquido constante neste termo, à vista, da qual dá plena, rasa
+      e geral quitação.
+      `;
+
+      const novaJanela = window.open("", "_blank");
+      novaJanela.document.write(`<pre>${contratoTexto}</pre>`);
+      novaJanela.document.close();
+      novaJanela.print();
     }
   </script>
 </body>
