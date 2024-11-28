@@ -177,25 +177,9 @@
         }
      </script>
 
-<div id="notification" style="padding: 10px; background-color: #f8f8f8; border: 1px solid #ddd; font-size: 16px;"></div>
-
-<script>
-    const notifications = [
-        'Central de Faturamento',
-        'Este site foi criado para centralizar links úteis e facilitar o registro de produtividade de forma prática e organizada.',
-        'Novidades disponíveis na seção de avisos.'
-    ];
-
-    let currentNotificationIndex = 0;
-
-    function showNotification() {
-        const notificationElement = document.getElementById('notification');
-        notificationElement.textContent = notifications[currentNotificationIndex];
-        currentNotificationIndex = (currentNotificationIndex + 1) % notifications.length;
-    }
-
-    setInterval(showNotification, 5000); // Troca de mensagem a cada 5 segundos
-</script>
+<div style="padding: 10px; background-color: #f8f8f8; border: 1px solid #ddd; font-size: 16px; text-align: center;">
+    Bem-vindo ao "Quadro" da Central de Faturamento. Este site foi criado para centralizar links úteis e facilitar o registro de produtividade de forma prática e organizada.
+</div>
 
     
 </body>
