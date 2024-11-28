@@ -188,34 +188,25 @@
         </div>
     </div>
 
-    <script>
-        let currentAvisoIndex = 0;
-        const avisos = document.querySelectorAll('#avisos img');
+<script>
+    const notifications = [
+        'Central de Faturamento',
+        'Este site foi criado para centralizar links úteis e facilitar o registro de produtividade de forma prática e organizada.',
+        'Novidades disponíveis na seção de avisos.'
+    ];
 
-        function showAviso(index) {
-            avisos.forEach((aviso, i) => {
-                if (i === index) {
-                    aviso.classList.add('active');
-                } else {
-                    aviso.classList.remove('active');
-                }
-            });
-        }
+    let currentNotificationIndex = 0;
 
-        function prevAviso() {
-            currentAvisoIndex = (currentAvisoIndex - 1 + avisos.length) % avisos.length;
-            showAviso(currentAvisoIndex);
-        }
+    function showNotification() {
+        const notificationElement = document.getElementById('notification');
+        notificationElement.textContent = notifications[currentNotificationIndex];
+        currentNotificationIndex = (currentNotificationIndex + 1) % notifications.length;
+    }
 
-        function nextAviso() {
-            currentAvisoIndex = (currentAvisoIndex + 1) % avisos.length;
-            showAviso(currentAvisoIndex);
-        }
+    setInterval(showNotification, 5000); // Troca de mensagem a cada 5 segundos
+</script>
+<div id="notification" style="padding: 10px; background-color: #f8f8f8; border: 1px solid #ddd; font-size: 16px;"></div>
 
-        setInterval(() => {
-            nextAviso();
-        }, 10000); // Troca de imagem a cada 3 segundos
-    </script>
     
 </body>
 </html>
